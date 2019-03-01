@@ -1,0 +1,12 @@
+/lastupdate.tmp
+/*.tmp
+.idea
+*.log.*
+*.log
+data
+vendor
+deploy/natsmicro
+ui/node_modules
+
+build
+gostresser
