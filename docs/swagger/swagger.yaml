@@ -1,0 +1,162 @@
+basePath: /
+definitions:
+  config.BaseConf:
+    properties:
+      _id:
+        type: string
+      concurrency:
+        type: integer
+      cpus:
+        type: integer
+      disablecompression:
+        type: boolean
+      disablekeepalives:
+        type: boolean
+      disableredirects:
+        type: boolean
+      duration:
+        type: integer
+      h2:
+        type: boolean
+      proxyaddr:
+        type: string
+      reqconfs:
+        items:
+          $ref: '#/definitions/config.ReqConf'
+        type: array
+      timeout:
+        type: integer
+    type: object
+  config.HeaderSlice:
+    items: {}
+    type: array
+  config.ReqConf:
+    properties:
+      accept:
+        type: string
+      authheader:
+        type: string
+      body:
+        type: string
+      contenttype:
+        type: string
+      headers:
+        $ref: '#/definitions/config.HeaderSlice'
+        type: object
+      hostheader:
+        type: string
+      method:
+        type: string
+      reqFreq:
+        type: integer
+      url:
+        type: string
+    type: object
+host: localhost:8179
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /conf:
+    get:
+      description: ListConf
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: ListConf
+    post:
+      consumes:
+      - application/json
+      description: CreateConf
+      parameters:
+      - description: create BaseConf
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/config.BaseConf'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: CreateConf
+  /conf/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: RemoveConf
+      parameters:
+      - description: Some ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: RemoveConf
+    get:
+      consumes:
+      - application/json
+      description: DetailConf
+      parameters:
+      - description: Some ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: DetailConf
+    put:
+      consumes:
+      - application/json
+      description: UpdateConf
+      parameters:
+      - description: Some ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: create BaseConf
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/config.BaseConf'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: UpdateConf
+swagger: "2.0"

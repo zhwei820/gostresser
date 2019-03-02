@@ -16,11 +16,26 @@
 package main
 
 import (
+	_ "github.com/zhwei820/gostresser/docs"
 	"github.com/zhwei820/gostresser/worker"
 	"os"
 	"os/signal"
 )
 
+// @title Swagger Example API
+// @version 1.0
+// @description This is a sample server Petstore server.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host localhost:8179
+// @BasePath /
 func main() {
 	go StartApi()
 	go worker.Run()

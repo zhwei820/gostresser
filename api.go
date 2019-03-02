@@ -1,13 +1,20 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"github.com/zhwei820/gostresser/handlers"
+)
 
 func StartApi() {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r.GET("/swagger/*any", ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "NAME_OF_ENV_VARIABLE"))
+
+	r.GET("/conf", handlers.ListConf)
+	r.POST("/conf", handlers.CreateConf)
+	r.PUT("/conf/:id", handlers.UpdateConf)
+	r.GET("/conf/:id", handlers.DetailConf)
+	r.DELETE("/conf/:id", handlers.RemoveConf)
 	r.Run("0.0.0.0:8179") // listen and serve on 0.0.0.0:8080
 }
