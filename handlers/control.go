@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zhwei820/gostresser/config"
+	"github.com/zhwei820/gostresser/worker"
 )
 
 // @Summary Start
@@ -15,8 +16,9 @@ import (
 func Start(c *gin.Context) {
 	id := c.Param("id")
 
-	res, _ := config.BaseConfManager().FindOne(id)
-	c.JSON(200, res)
+	baseConf, _ := config.BaseConfManager().FindOne(id)
+	worker.Run(baseConf)
+	c.JSON(200, "ok")
 }
 
 // @Summary End
@@ -26,9 +28,10 @@ func Start(c *gin.Context) {
 // @Param   id     path    string     true        "Some ID"
 // @Success 200 {string} string	"ok"
 // @Router /end/{id} [post]
-func End(c *gin.Context) {
+func Stop(c *gin.Context) {
 	id := c.Param("id")
 
-	res, _ := config.BaseConfManager().FindOne(id)
-	c.JSON(200, res)
+	baseConf, _ := config.BaseConfManager().FindOne(id)
+	worker.Stop(baseConf)
+	c.JSON(200, "ok")
 }

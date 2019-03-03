@@ -27,7 +27,7 @@ const (
 	barChar = "■"
 )
 
-// We report for max 1M results.
+// We Report for max 1M results.
 const maxRes = 1000000
 
 type report struct {
@@ -127,7 +127,7 @@ func (r *report) finalize(total time.Duration) {
 
 func (r *report) print() {
 	buf := &bytes.Buffer{}
-	if err := newTemplate(r.output).Execute(buf, r.snapshot()); err != nil {
+	if err := newTemplate(r.output).Execute(buf, r.Snapshot()); err != nil {
 		log.Println("error:", err.Error())
 		return
 	}
@@ -140,7 +140,7 @@ func (r *report) printf(s string, v ...interface{}) {
 	fmt.Fprintf(r.w, s, v...)
 }
 
-func (r *report) snapshot() Report {
+func (r *report) Snapshot() Report {
 	snapshot := Report{
 		AvgTotal:    r.avgTotal,
 		Average:     r.average,

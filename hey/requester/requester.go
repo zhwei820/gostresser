@@ -48,6 +48,7 @@ type result struct {
 }
 
 type Work struct {
+
 	// Request is the request to be made.
 	Request *http.Request
 
@@ -93,7 +94,7 @@ type Work struct {
 	stopCh   chan struct{}
 	start    time.Duration
 
-	report *report
+	Report *report
 }
 
 func (b *Work) writer() io.Writer {
@@ -116,10 +117,10 @@ func (b *Work) Init() {
 func (b *Work) Run() {
 	b.Init()
 	b.start = now()
-	b.report = newReport(b.writer(), b.results, b.Output, b.N)
+	b.Report = newReport(b.writer(), b.results, b.Output, b.N)
 	// Run the reporter first, it polls the result channel until it is closed.
 	go func() {
-		runReporter(b.report)
+		runReporter(b.Report)
 	}()
 	b.runWorkers()
 	b.Finish()
@@ -136,8 +137,8 @@ func (b *Work) Finish() {
 	close(b.results)
 	total := now() - b.start
 	// Wait until the reporter is done.
-	<-b.report.done
-	b.report.finalize(total)
+	<-b.Report.done
+	b.Report.finalize(total)
 }
 
 func (b *Work) makeRequest(c *http.Client) {

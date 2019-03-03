@@ -17,7 +17,6 @@ package main
 
 import (
 	_ "github.com/zhwei820/gostresser/docs"
-	"github.com/zhwei820/gostresser/worker"
 	"os"
 	"os/signal"
 )
@@ -38,7 +37,6 @@ import (
 // @BasePath /
 func main() {
 	go StartApi()
-	go worker.Run()
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)

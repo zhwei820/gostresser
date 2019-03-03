@@ -31,5 +31,5 @@ func init() {
 		Concurrency:        20,
 		ReqConfs:           []ReqConf{reqConf},
 	}
-	Run(baseConf)
+	Run(&baseConf)
 }
