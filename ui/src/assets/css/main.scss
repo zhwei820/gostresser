@@ -1,0 +1,49 @@
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  box-sizing: inherit;
+}
+
+body {
+  min-width: 1200px;
+  font-size: 14px;
+  line-height: 1.444;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Roboto-Regular", "Helvetica Neue", "Helvetica", "Arial", sans-serif, Microsoft YaHei;
+  color: #333;
+  overflow: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ivu-btn {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.ivu-table-cell {
+  line-height: 1.3;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.ivu-form,
+.ivu-form .ivu-form-item-label,
+.ivu-input
+{
+  font-size: 14px!important;
+}
+
+.header {
+  background-color: #2d8cf0!important;
+  color: #fff;
+  z-index: 5!important;
+}

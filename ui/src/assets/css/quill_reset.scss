@@ -1,0 +1,20 @@
+.preview,
+.ql-editor {
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
+}
+
+@for $i from 0 through 10 {
+  $fs: $i * 2 + 12px;
+
+  .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="#{$fs}"]::before,
+  .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="#{$fs}"]::before {
+    content: '#{$fs}';
+    font-size: #{$fs} !important;
+  }
+}
