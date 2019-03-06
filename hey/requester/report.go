@@ -59,13 +59,15 @@ type report struct {
 	sizeTotal int64
 	numRes    int64
 	output    string
+	start     time.Duration
 
 	w io.Writer
 }
 
-func newReport(w io.Writer, results chan *result, output string, n int) *report {
+func newReport(w io.Writer, results chan *result, output string, n int, start time.Duration) *report {
 	cap := min(n, maxRes)
 	return &report{
+		start:       start,
 		output:      output,
 		results:     results,
 		done:        make(chan bool, 1),
@@ -142,6 +144,7 @@ func (r *report) printf(s string, v ...interface{}) {
 
 func (r *report) Snapshot() Report {
 	snapshot := Report{
+		Start:       r.start,
 		AvgTotal:    r.avgTotal,
 		Average:     r.average,
 		Rps:         r.rps,
@@ -268,6 +271,7 @@ func (r *report) histogram() []Bucket {
 }
 
 type Report struct {
+	Start    time.Duration
 	AvgTotal float64
 	Fastest  float64
 	Slowest  float64

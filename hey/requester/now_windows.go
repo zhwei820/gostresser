@@ -20,7 +20,7 @@ import (
 	"unsafe"
 )
 
-// now returns time.Duration using queryPerformanceCounter
+// Now returns time.Duration using queryPerformanceCounter
 func now() time.Duration {
 	var now int64
 	syscall.Syscall(queryPerformanceCounterProc.Addr(), 1, uintptr(unsafe.Pointer(&now)), 0, 0)

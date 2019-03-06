@@ -195,12 +195,12 @@
                     "disableredirects": true,
                     "proxyaddr": "",
                     "timeout": 10,
-                    "duration": 30,
+                    "duration": 300,
                     "concurrency": 20,
                     "reqconfs": [{
-                        "url": "www.baidu.com",
+                        "url": "https://cn.bing.com/",
                         "method": "GET",
-                        "headers": [""],
+                        "headers": [],
                         "body": "",
                         "accept": "",
                         "contenttype": "",
@@ -228,9 +228,9 @@
             },
             handleAddUrlSettings() {
                 this.formDynamic.reqconfs.push({
-                    "url": "www.baidu.com",
+                    "url": "https://www.baidu.com",
                     "method": "GET",
-                    "headers": [""],
+                    "headers": [],
                     "body": "",
                     "accept": "",
                     "contenttype": "",

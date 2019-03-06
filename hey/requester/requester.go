@@ -116,8 +116,8 @@ func (b *Work) Init() {
 // all work is done.
 func (b *Work) Run() {
 	b.Init()
-	b.start = now()
-	b.Report = newReport(b.writer(), b.results, b.Output, b.N)
+	b.start = Now()
+	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start)
 	// Run the reporter first, it polls the result channel until it is closed.
 	go func() {
 		runReporter(b.Report)
@@ -135,14 +135,14 @@ func (b *Work) Stop() {
 
 func (b *Work) Finish() {
 	close(b.results)
-	total := now() - b.start
+	total := Now() - b.start
 	// Wait until the reporter is done.
 	<-b.Report.done
 	b.Report.finalize(total)
 }
 
 func (b *Work) makeRequest(c *http.Client) {
-	s := now()
+	s := Now()
 	var size int64
 	var code int
 	var dnsStart, connStart, resStart, reqStart, delayStart time.Duration
@@ -150,27 +150,27 @@ func (b *Work) makeRequest(c *http.Client) {
 	req := cloneRequest(b.Request, b.RequestBody)
 	trace := &httptrace.ClientTrace{
 		DNSStart: func(info httptrace.DNSStartInfo) {
-			dnsStart = now()
+			dnsStart = Now()
 		},
 		DNSDone: func(dnsInfo httptrace.DNSDoneInfo) {
-			dnsDuration = now() - dnsStart
+			dnsDuration = Now() - dnsStart
 		},
 		GetConn: func(h string) {
-			connStart = now()
+			connStart = Now()
 		},
 		GotConn: func(connInfo httptrace.GotConnInfo) {
 			if !connInfo.Reused {
-				connDuration = now() - connStart
+				connDuration = Now() - connStart
 			}
-			reqStart = now()
+			reqStart = Now()
 		},
 		WroteRequest: func(w httptrace.WroteRequestInfo) {
-			reqDuration = now() - reqStart
-			delayStart = now()
+			reqDuration = Now() - reqStart
+			delayStart = Now()
 		},
 		GotFirstResponseByte: func() {
-			delayDuration = now() - delayStart
-			resStart = now()
+			delayDuration = Now() - delayStart
+			resStart = Now()
 		},
 	}
 	req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
@@ -181,7 +181,7 @@ func (b *Work) makeRequest(c *http.Client) {
 		io.Copy(ioutil.Discard, resp.Body)
 		resp.Body.Close()
 	}
-	t := now()
+	t := Now()
 	resDuration = t - resStart
 	finish := t - s
 	b.results <- &result{

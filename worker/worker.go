@@ -1,8 +1,10 @@
 package worker
 
 import (
+	"fmt"
 	. "github.com/zhwei820/gostresser/config"
 	"github.com/zhwei820/gostresser/hey/requester"
+	"github.com/zhwei820/gostresser/utils"
 	"net/http"
 	gourl "net/url"
 	"runtime"
@@ -19,6 +21,12 @@ const (
 )
 
 func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf("%v\n", err)
+			fmt.Printf("%s\n", utils.Stack(3))
+		}
+	}()
 	runtime.GOMAXPROCS(baseConf.Cpus)
 
 	// set content-type
@@ -102,30 +110,6 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 }
 
 func Run(baseConf *BaseConf) {
-	reqConf := ReqConf{
-		Url:     "https://www.baidu.com/",
-		Method:  "Get",
-		Headers: HeaderSlice{"Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7"},
-		Body:    "",
-		//BodyFile:"",
-		Accept:      "",
-		ContentType: "",
-		AuthHeader:  "",
-		HostHeader:  "",
-		ReqFreq:     5,
-	}
-	baseConf = &BaseConf{
-		H2:                 false,
-		Cpus:               runtime.GOMAXPROCS(-1),
-		DisableCompression: false,
-		DisableKeepAlives:  false,
-		DisableRedirects:   false,
-		ProxyAddr:          "",
-		Duration:           10,
-		Timeout:            10,
-		Concurrency:        20,
-		ReqConfs:           []ReqConf{reqConf, reqConf},
-	}
 	for ii, reqConf := range baseConf.ReqConfs {
 		worker_key := baseConf.Id.String() + strconv.Itoa(ii)
 		go workerRun(baseConf, reqConf, worker_key)

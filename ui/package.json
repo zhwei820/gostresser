@@ -12,6 +12,7 @@
     "@types/lodash": "^4.14.119",
     "axios": "^0.18.0",
     "babel-plugin-jsx-v-model": "^2.0.3",
+    "dateformat": "^3.0.3",
     "echarts": "^4.1.0",
     "iview": "^3.1.5",
     "v-charts": "^1.19.0",

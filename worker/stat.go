@@ -1,16 +1,22 @@
 package worker
 
+import (
+	"fmt"
+	"github.com/zhwei820/gostresser/hey/requester"
+	"time"
+)
+
 type SingleStat struct {
 	Method             string  `json:"method" bson:"method"`
 	Name               string  `json:"name" bson:"name"`
 	NumRequests        int     `json:"num_requests" bson:"num_requests"`
 	NumFailures        int     `json:"num_failures" bson:"num_failures"`
 	MedianResponseTime float64 `json:"median_response_time" bson:"median_response_time"`
-	AvgResponseTime    float64 `json:"avg_response_time" bson:"avg_response_time"`
+	AvgResponseTime    string  `json:"avg_response_time" bson:"avg_response_time"`
 	MinResponseTime    float64 `json:"min_response_time" bson:"min_response_time"`
 	MaxResponseTime    float64 `json:"max_response_time" bson:"max_response_time"`
 	AvgContentLength   float64 `json:"avg_content_length" bson:"avg_content_length"`
-	CurrentRps         float64 `json:"current_rps" bson:"current_rps"`
+	CurrentRps         int     `json:"current_rps" bson:"current_rps"`
 }
 
 type StatRes struct {
@@ -48,15 +54,30 @@ func StatReqs() *StatRes {
 	}
 	for _, item := range Workers {
 		report := item.Report.Snapshot()
+		mrt := 0.0
+		avgcl := 0.0
+		rps := 0
+
+		if int(len(report.ResLats)/2) > 0 {
+			mrt = report.ResLats[int(len(report.ResLats)/2)]
+			avgcl = float64(report.SizeTotal) / float64(len(report.ResLats))
+			if report.Rps > 0 {
+				rps = 0
+			} else {
+				rps = len(report.ResLats) / int((requester.Now()-report.Start)/time.Second)
+			}
+		}
+
+		AvgRes := fmt.Sprintf("%f", report.AvgRes)
 		res.Stats = append(res.Stats, SingleStat{
-			AvgContentLength:   float64(report.SizeTotal) / float64(len(report.ResLats)),
-			AvgResponseTime:    report.AvgRes,
+			AvgContentLength:   avgcl,
+			AvgResponseTime:    AvgRes,
 			MaxResponseTime:    report.ResMax,
 			MinResponseTime:    report.ResMin,
-			MedianResponseTime: report.ResLats[len(report.ResLats)/2],
-			CurrentRps:         report.Rps,
+			MedianResponseTime: mrt,
+			CurrentRps:         rps,
 			Method:             item.Request.Method,
-			Name:               item.Request.URL.Path,
+			Name:               item.Request.URL.Host + item.Request.URL.Path,
 			NumRequests:        len(report.ResLats),
 			NumFailures:        sum(report.ErrorDist),
 		})
