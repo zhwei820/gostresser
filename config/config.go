@@ -10,8 +10,9 @@ import (
 type BaseConf struct {
 	Id bson.ObjectId `json:"_id" bson:"_id"`
 
-	H2   bool `json:"h2" bson:"h2"`     // Enable HTTP/2.
-	Cpus int  `json:"cpus" bson:"cpus"` // Number of used cpu cores. (default for current machine is %d cores)
+	Name string `json:"name" bson:"name"` // name.
+	H2   bool   `json:"h2" bson:"h2"`     // Enable HTTP/2.
+	Cpus int    `json:"cpus" bson:"cpus"` // Number of used cpu cores. (default for current machine is %d cores)
 
 	DisableCompression bool      `json:"disablecompression" bson:"disablecompression"` // Disable compression.
 	DisableKeepAlives  bool      `json:"disablekeepalives" bson:"disablekeepalives"`   // Disable keep-alive, prevents re-use of TCP connections between different HTTP requests.

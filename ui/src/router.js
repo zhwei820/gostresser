@@ -1,74 +1,49 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './views/Login.vue'
 import Container from './components/Container.vue'
-import storage from './utils/storage'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      // beforeEnter: (to, from, next) => {
-      //   if (!storage.getItem(storage.KEYS.tokenName)) {
-      //     next({
-      //       name: 'Login',
-      //     })
-      //     return
-      //   }
-      //   next()
-      // },
-      path: '/',
-      component: Container,
-      redirect: {name: 'serviceList'},
-      children: [
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: [
         {
-          name: 'serviceList',
-          path: 'service',
-          component: () => import('./views/service/ServiceList.vue'),
-        },
-        {
-          name: 'serviceDetail',
-          path: 'service/:name',
-          component: () => import('./views/service/ServiceDetail.vue'),
-        },
-        {
-          name: 'authList',
-          path: 'auths',
-          component: () => import('./views/auths/AuthList.vue'),
-        },
-        {
-          name: 'authDetail',
-          path: 'auths/:name',
-          component: () => import('./views/auths/AuthDetail.vue'),
-        },
+            // beforeEnter: (to, from, next) => {
+            //   if (!storage.getItem(storage.KEYS.tokenName)) {
+            //     next({
+            //       name: 'Login',
+            //     })
+            //     return
+            //   }
+            //   next()
+            // },
+            path: '/',
+            component: Container,
+            redirect: {name: 'testconfList'},
+            children: [
+                {
+                    name: 'testconfList',
+                    path: 'testconf',
+                    component: () => import('./views/testconf/TestConfList.vue'),
+                },
+                {
+                    name: 'testconfDetail',
+                    path: 'testconf/:id',
+                    component: () => import('./views/testconf/TestConfDetail.vue'),
+                },
 
-        {
-          name: 'health',
-          path: 'health',
-          component: () => import('./views/healthcheck/HealthCheck.vue'),
+
+                {
+                    name: 'statdata',
+                    path: 'statdata',
+                    component: () => import('./views/statdata/StatData.vue'),
+                },
+            ],
         },
-      ],
-    },
-    // {
-    //   path: '/login',
-    //   name: 'Login',
-    //   component: Login
-    // },
-    // {
-    //   path: '/logout',
-    //   name: 'logout',
-    //   component: Login,
-    //   beforeEnter(to, from, next) {
-    //     storage.clear()
-    //     next()
-    //   },
-    // },
-    {
-      path: '*',
-      component: () => import('@/views/Notfound.vue'),
-    },
-  ]
+        {
+            path: '*',
+            component: () => import('@/views/Notfound.vue'),
+        },
+    ]
 })

@@ -1,16 +1,16 @@
 package worker
 
 type SingleStat struct {
-	AvgContentLength   float64 `json:"avg_content_length" bson:"avg_content_length"`
-	AvgResponseTime    float64 `json:"avg_response_time" bson:"avg_response_time"`
-	MaxResponseTime    float64 `json:"max_response_time" bson:"max_response_time"`
-	MedianResponseTime float64 `json:"median_response_time" bson:"median_response_time"`
-	MinResponseTime    float64 `json:"min_response_time" bson:"min_response_time"`
-	CurrentRps         float64 `json:"current_rps" bson:"current_rps"`
 	Method             string  `json:"method" bson:"method"`
 	Name               string  `json:"name" bson:"name"`
 	NumRequests        int     `json:"num_requests" bson:"num_requests"`
 	NumFailures        int     `json:"num_failures" bson:"num_failures"`
+	MedianResponseTime float64 `json:"median_response_time" bson:"median_response_time"`
+	AvgResponseTime    float64 `json:"avg_response_time" bson:"avg_response_time"`
+	MinResponseTime    float64 `json:"min_response_time" bson:"min_response_time"`
+	MaxResponseTime    float64 `json:"max_response_time" bson:"max_response_time"`
+	AvgContentLength   float64 `json:"avg_content_length" bson:"avg_content_length"`
+	CurrentRps         float64 `json:"current_rps" bson:"current_rps"`
 }
 
 type StatRes struct {
