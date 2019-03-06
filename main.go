@@ -17,8 +17,12 @@ package main
 
 import (
 	_ "github.com/zhwei820/gostresser/docs"
+	"log"
+	"net/http"
 	"os"
 	"os/signal"
+
+	_ "net/http/pprof"
 )
 
 // @title Swagger Example API
@@ -36,6 +40,11 @@ import (
 // @host localhost:8179
 // @BasePath /
 func main() {
+
+	go func() {
+		log.Println(http.ListenAndServe("localhost:8780", nil))
+	}()
+
 	go StartApi()
 
 	c := make(chan os.Signal, 1)

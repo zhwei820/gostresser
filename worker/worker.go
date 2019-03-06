@@ -113,6 +113,7 @@ func Run(baseConf *BaseConf) {
 	for ii, reqConf := range baseConf.ReqConfs {
 		worker_key := baseConf.Id.String() + strconv.Itoa(ii)
 		go workerRun(baseConf, reqConf, worker_key)
+		time.Sleep(100 * time.Millisecond)
 	}
 }
 

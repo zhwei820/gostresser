@@ -1,7 +1,7 @@
 <template>
     <div style="margin-top: 50px">
-        <Button id="btn" type='primary' @click="startStressTest">START</Button>
-        <Button id="btn2" type='primary' @click="startStressTest">END</Button>
+        <Button id="btn" type='primary' :disabled="startdisable" @click="startStressTest">START</Button>
+        <Button id="btn2" type='primary' :disabled="enddisable" @click="StopStressTest">END</Button>
 
         <Card>
             <h1 slot="title">Stress Data Stat</h1>
@@ -27,9 +27,11 @@
     }
 
     import {fetchStatData} from '@/apis/stat'
+    import {StartStress, StopStress} from '@/apis/control'
     import {cols} from './helper.jsx'
     import _omit from 'lodash/omit'
     import VeLine from 'v-charts/lib/line.common'
+
     var dateFormat = require('dateformat');
 
 
@@ -38,10 +40,12 @@
         components: {VeLine},
         data() {
             return {
+                startdisable: false,
+                enddisable: true,
                 chartData: {
-                    columns: ['ts', 'rps', 'test'],
+                    columns: ['ts', ],
                     rows: [
-                        {'ts': '01-01', 'rps': 1231, 'test': 1931},
+                        {'ts': '01-01', },
                     ]
                 },
                 formData: {},
@@ -57,8 +61,18 @@
         },
         methods: {
             startStressTest() {
+                const id = this.$route.params.id
+                StartStress(id)
+                this.startdisable = true
+                this.enddisable = false
             },
+            StopStressTest() {
+                const id = this.$route.params.id
+                StopStress(id)
 
+                this.startdisable = false
+                this.enddisable = true
+            },
             async fetchStatData() {
                 // debugger
                 const response = await fetchStatData(_omit(this.pager, 'total'))
@@ -74,12 +88,16 @@
                 this.tableData.forEach((val) => {
                     cols.push(val.name)
                     row[val.name] = val.current_rps
-                    console.log(val)
-
+                    if (Math.abs(val.current_rps) < 1e-3) {
+                        this.startdisable = false
+                        this.enddisable = true
+                    } else {
+                        this.startdisable = true
+                        this.enddisable = false
+                    }
                 })
                 this.chartData.columns = ['ts', ...cols]
                 this.chartData.rows.push(row)
-                console.log(row)
 
             },
         },

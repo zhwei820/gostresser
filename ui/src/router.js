@@ -36,7 +36,7 @@ export default new Router({
 
                 {
                     name: 'statdata',
-                    path: 'statdata',
+                    path: 'statdata/:id',
                     component: () => import('./views/statdata/StatData.vue'),
                 },
             ],
