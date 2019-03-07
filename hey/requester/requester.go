@@ -48,7 +48,6 @@ type result struct {
 }
 
 type Work struct {
-
 	// Request is the request to be made.
 	Request *http.Request
 
@@ -198,15 +197,17 @@ func (b *Work) makeRequest(c *http.Client) {
 	}
 }
 
-func (b *Work) runWorker(client *http.Client, n int) {
+func (b *Work) runWorker(clients []*http.Client, n int) {
 	var throttle <-chan time.Time
 	if b.QPS > 0 {
 		throttle = time.Tick(time.Duration(1e6/(b.QPS)) * time.Microsecond)
 	}
 
 	if b.DisableRedirects {
-		client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
-			return http.ErrUseLastResponse
+		for _, client := range clients {
+			client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+				return http.ErrUseLastResponse
+			}
 		}
 	}
 	for i := 0; i < n; i++ {
@@ -218,7 +219,8 @@ func (b *Work) runWorker(client *http.Client, n int) {
 			if b.QPS > 0 {
 				<-throttle
 			}
-			b.makeRequest(client)
+			b.makeRequest(clients[i%len(clients)])
+
 		}
 	}
 }
@@ -242,12 +244,15 @@ func (b *Work) runWorkers() {
 	} else {
 		tr.TLSNextProto = make(map[string]func(string, *tls.Conn) http.RoundTripper)
 	}
-	client := &http.Client{Transport: tr, Timeout: time.Duration(b.Timeout) * time.Second}
 
 	// Ignore the case where b.N % b.C != 0.
 	for i := 0; i < b.C; i++ {
 		go func() {
-			b.runWorker(client, b.N/b.C)
+			clients := make([]*http.Client, 0)
+			for ii := 9; ii < 10; ii += 1 {
+				clients = append(clients, &http.Client{Transport: tr, Timeout: time.Duration(b.Timeout) * time.Second})
+			}
+			b.runWorker(clients, b.N/b.C)
 			wg.Done()
 		}()
 	}

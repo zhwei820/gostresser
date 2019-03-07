@@ -7,12 +7,13 @@ import (
 	"github.com/zhwei820/gostresser/utils"
 	"net/http"
 	gourl "net/url"
-	"runtime"
 	"strconv"
+	"sync"
 	"time"
 )
 
-var Workers = make(map[string]*requester.Work)
+//var Workers = make(map[string]*requester.Work)
+var Workers sync.Map
 
 const (
 	headerRegexp = `^([\w-]+):\s*(.+)`
@@ -27,7 +28,7 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 			fmt.Printf("%s\n", utils.Stack(3))
 		}
 	}()
-	runtime.GOMAXPROCS(baseConf.Cpus)
+	//runtime.GOMAXPROCS(baseConf.Cpus)
 
 	// set content-type
 	header := make(http.Header)
@@ -83,7 +84,7 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 	header.Set("User-Agent", ua)
 	req.Header = header
 
-	Workers[worker_key] = &requester.Work{
+	Workers.Store(worker_key, &requester.Work{
 		Request:            req,
 		RequestBody:        bodyAll,
 		N:                  1000000,              // big num
@@ -96,16 +97,17 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 		H2:                 baseConf.H2,
 		ProxyAddr:          proxyURL,
 		Output:             "",
-	}
-	Workers[worker_key].Init()
+	})
+	worker, _ := Workers.Load(worker_key)
+	worker.(*requester.Work).Init()
 
 	if baseConf.Duration > 0 {
 		go func() {
 			time.Sleep(time.Duration(baseConf.Duration) * time.Second)
-			Workers[worker_key].Stop()
+			worker.(*requester.Work).Stop()
 		}()
 	}
-	Workers[worker_key].Run()
+	worker.(*requester.Work).Run()
 
 }
 
@@ -118,8 +120,11 @@ func Run(baseConf *BaseConf) {
 }
 
 func Stop(baseConf *BaseConf) {
+
 	for ii := range baseConf.ReqConfs {
 		worker_key := baseConf.Id.String() + strconv.Itoa(ii)
-		Workers[worker_key].Stop()
+		worker, _ := Workers.Load(worker_key)
+		worker.(*requester.Work).Stop()
+		Workers.Delete(worker_key)
 	}
 }

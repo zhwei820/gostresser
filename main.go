@@ -16,13 +16,12 @@
 package main
 
 import (
+	"github.com/google/gops/agent"
 	_ "github.com/zhwei820/gostresser/docs"
 	"log"
-	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
-
-	_ "net/http/pprof"
 )
 
 // @title Swagger Example API
@@ -40,10 +39,9 @@ import (
 // @host localhost:8179
 // @BasePath /
 func main() {
-
-	go func() {
-		log.Println(http.ListenAndServe("localhost:8780", nil))
-	}()
+	if err := agent.Listen(agent.Options{}); err != nil {
+		log.Fatal(err)
+	}
 
 	go StartApi()
 

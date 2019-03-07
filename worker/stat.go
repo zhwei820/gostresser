@@ -46,13 +46,17 @@ func sum(ErrorDist map[string]int) int {
 
 func StatReqs() *StatRes {
 	UserCount := 0
-	for _, item := range Workers {
-		UserCount += item.C
-	}
+
+	Workers.Range(func(k, item interface{}) bool {
+		UserCount += item.(*requester.Work).C
+		return true
+	})
+
 	res := StatRes{
 		UserCount: UserCount,
 	}
-	for _, item := range Workers {
+	Workers.Range(func(k, item1 interface{}) bool {
+		item := item1.(*requester.Work)
 		report := item.Report.Snapshot()
 		mrt := 0.0
 		avgcl := 0.0
@@ -83,6 +87,8 @@ func StatReqs() *StatRes {
 			NumRequests:        len(report.ResLats),
 			NumFailures:        sum(report.ErrorDist),
 		})
-	}
+		return true
+	})
+
 	return &res
 }

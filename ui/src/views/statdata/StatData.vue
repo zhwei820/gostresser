@@ -1,21 +1,30 @@
 <template>
-    <div style="margin-top: 50px">
-        <Button id="btn" type='primary' :disabled="startdisable" @click="startStressTest">START</Button>
-        <Button id="btn2" type='primary' :disabled="enddisable" @click="StopStressTest">END</Button>
+    <div>
+        <Button id="btn2" @click="goback">Go Back</Button>
 
-        <Card>
-            <h1 slot="title">Stress Data Stat</h1>
 
-            <Table class="ordertable" ref="orderTable" :columns="columns" :data="tableData"></Table>
-        </Card>
+        <div>
+            <Row>
+                <Col offset="20">
+                    <Button id="btn" type='primary' :disabled="startdisable" @click="startStressTest">START</Button>
+                    <Button id="btn1" type='error' :disabled="enddisable" @click="StopStressTest">END</Button>
+                </Col>
+            </Row>
 
-        <Card>
-            <h1 slot="title">Stress Data Chart</h1>
+            <Card>
+                <h1 slot="title">Stress Data Stat</h1>
 
-            <div class="container">
-                <ve-line :data="chartData"></ve-line>
-            </div>
-        </Card>
+                <Table class="ordertable" ref="orderTable" :columns="columns" :data="tableData"></Table>
+            </Card>
+
+            <Card>
+                <h1 slot="title">Stress Data Chart</h1>
+
+                <div class="container">
+                    <ve-line :data="chartData"></ve-line>
+                </div>
+            </Card>
+        </div>
     </div>
 </template>
 
@@ -43,9 +52,9 @@
                 startdisable: false,
                 enddisable: true,
                 chartData: {
-                    columns: ['ts', ],
+                    columns: ['ts',],
                     rows: [
-                        {'ts': '01-01', },
+                        {'ts': '01-01',},
                     ]
                 },
                 formData: {},
@@ -60,6 +69,10 @@
             }
         },
         methods: {
+            goback() {
+                this.$router.push({name: 'testconfList',})
+            },
+
             startStressTest() {
                 const id = this.$route.params.id
                 StartStress(id)
