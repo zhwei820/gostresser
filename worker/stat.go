@@ -54,21 +54,9 @@ func StatReqs() *StatRes {
 	res := StatRes{
 		UserCount: UserCount,
 	}
-	println("111134")
-	for _, key := range requester.ReportersKey {
-		println("9999999")
-		item2, _ := requester.Reporters.Get(key)
-		_ = item2.(*requester.Rreport)
-
-		item1 := item2.(*requester.Rreport)
-		_ = item1.Snapshot()
-
-	}
-	return &res
 
 	for _, key := range requester.ReportersKey {
-		println("9999999")
-		item2, _ := requester.Reporters.Get(key)
+		item2, _ := requester.Reporters.Load(key)
 		item1 := item2.(*requester.Rreport)
 		report := item1.Snapshot()
 		mrt := 0.0

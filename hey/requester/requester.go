@@ -18,7 +18,6 @@ package requester
 import (
 	"bytes"
 	"crypto/tls"
-	"github.com/orcaman/concurrent-map"
 	"golang.org/x/net/http2"
 	"io"
 	"io/ioutil"
@@ -47,7 +46,7 @@ type result struct {
 	contentLength int64
 }
 
-var Reporters = cmap.New()
+var Reporters = sync.Map{}
 var ReportersKey []string
 
 type Work struct {
@@ -120,7 +119,7 @@ func (b *Work) Run(worker_key string) {
 	b.Init()
 	b.start = Now()
 	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start, b)
-	Reporters.Set(worker_key, b.Report)
+	Reporters.Store(worker_key, b.Report)
 	ReportersKey = append(ReportersKey, worker_key)
 	// Run the reporter first, it polls the result channel until it is closed.
 	go func() {
