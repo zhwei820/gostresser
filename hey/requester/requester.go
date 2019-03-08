@@ -18,6 +18,7 @@ package requester
 import (
 	"bytes"
 	"crypto/tls"
+	"golang.org/x/net/http2"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -26,8 +27,6 @@ import (
 	"os"
 	"sync"
 	"time"
-
-	"golang.org/x/net/http2"
 )
 
 // Max size of the buffer of result channel.
@@ -118,6 +117,7 @@ func (b *Work) Run() {
 	b.Init()
 	b.start = Now()
 	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start)
+
 	// Run the reporter first, it polls the result channel until it is closed.
 	go func() {
 		runReporter(b.Report)

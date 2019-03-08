@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package say;
+
+option optimize_for = SPEED;
+
+service SayService {
+    rpc SayHello (SayInput) returns (SayOutput) {
+    }
+}
+
+message SayInput {
+    string query = 1; // query
+    sint64 page_number = 2; // 页数
+    sint64 result_per_page = 3; // 每页数量
+
+}
+
+message SayOutput {
+    string url = 1;
+    string title = 2;
+    repeated string snippets = 3;
+    repeated SayResult results = 4;
+}
+
+message SayResult {
+    string url = 1;
+    string title = 2;
+    repeated string snippets = 3;
+}
