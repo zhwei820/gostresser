@@ -46,16 +46,29 @@ func sum(ErrorDist map[string]int) int {
 
 func StatReqs() *StatRes {
 	UserCount := 0
-
-	requester.Reporters.Range(func(k, item interface{}) bool {
-		UserCount += item.(*requester.Rreport).C
-		return true
-	})
+	//for _, key := range requester.ReportersKey {
+	//	item, _ := requester.Reporters.Load(key)
+	//	UserCount += item.(*requester.Rreport).C
+	//}
 
 	res := StatRes{
 		UserCount: UserCount,
 	}
-	requester.Reporters.Range(func(k, item2 interface{}) bool {
+	println("111134")
+	for _, key := range requester.ReportersKey {
+		println("9999999")
+		item2, _ := requester.Reporters.Get(key)
+		_ = item2.(*requester.Rreport)
+
+		item1 := item2.(*requester.Rreport)
+		_ = item1.Snapshot()
+
+	}
+	return &res
+
+	for _, key := range requester.ReportersKey {
+		println("9999999")
+		item2, _ := requester.Reporters.Get(key)
 		item1 := item2.(*requester.Rreport)
 		report := item1.Snapshot()
 		mrt := 0.0
@@ -87,8 +100,7 @@ func StatReqs() *StatRes {
 			NumRequests:        len(report.ResLats),
 			NumFailures:        sum(report.ErrorDist),
 		})
-		return true
-	})
+	}
 
 	return &res
 }

@@ -198,7 +198,7 @@ func (r *Rreport) Snapshot() Report {
 	sort.Float64s(r.resLats)
 	sort.Float64s(r.delayLats)
 
-	snapshot.Histogram = r.histogram()
+	//snapshot.Histogram = r.histogram()
 	snapshot.LatencyDistribution = r.latencies()
 
 	snapshot.Fastest = r.fastest

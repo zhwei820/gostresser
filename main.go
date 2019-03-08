@@ -17,7 +17,10 @@ package main
 
 import (
 	_ "github.com/zhwei820/gostresser/docs"
+	"log"
+	"net/http"
 	_ "net/http/pprof"
+	"runtime"
 )
 
 // @title Swagger Example API
@@ -35,6 +38,12 @@ import (
 // @host localhost:8179
 // @BasePath /
 func main() {
+	//远程获取pprof数据
+	go func() {
+		log.Println(http.ListenAndServe("localhost:8680", nil))
+	}()
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	StartApi()
 

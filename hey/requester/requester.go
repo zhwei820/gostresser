@@ -18,6 +18,8 @@ package requester
 import (
 	"bytes"
 	"crypto/tls"
+	"github.com/orcaman/concurrent-map"
+	"golang.org/x/net/http2"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -26,8 +28,6 @@ import (
 	"os"
 	"sync"
 	"time"
-
-	"golang.org/x/net/http2"
 )
 
 // Max size of the buffer of result channel.
@@ -47,7 +47,8 @@ type result struct {
 	contentLength int64
 }
 
-var Reporters sync.Map
+var Reporters = cmap.New()
+var ReportersKey []string
 
 type Work struct {
 	// Request is the request to be made.
@@ -119,7 +120,8 @@ func (b *Work) Run(worker_key string) {
 	b.Init()
 	b.start = Now()
 	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start, b)
-	Reporters.Store(worker_key, b.Report)
+	Reporters.Set(worker_key, b.Report)
+	ReportersKey = append(ReportersKey, worker_key)
 	// Run the reporter first, it polls the result channel until it is closed.
 	go func() {
 		runReporter(b.Report)
@@ -177,6 +179,7 @@ func (b *Work) makeRequest(c *http.Client) {
 	}
 	req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
 	resp, err := c.Do(req)
+
 	if err == nil {
 		size = resp.ContentLength
 		code = resp.StatusCode

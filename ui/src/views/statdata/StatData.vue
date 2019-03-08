@@ -117,9 +117,9 @@
         mounted() {
             this.fetchStatData()
 
-            setInterval(() => {
-                this.fetchStatData()
-            }, 2000)
+            // setInterval(() => {
+            //     this.fetchStatData()
+            // }, 2000)
         }
 
     }

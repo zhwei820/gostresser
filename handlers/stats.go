@@ -13,5 +13,6 @@ import (
 // @Router /stat [get]
 func Stat(c *gin.Context) {
 	res := worker.StatReqs()
+	//res := ""
 	c.JSON(200, res)
 }
