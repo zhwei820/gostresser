@@ -18,6 +18,8 @@ definitions:
         type: integer
       h2:
         type: boolean
+      name:
+        type: string
       proxyaddr:
         type: string
       reqconfs:
@@ -178,6 +180,19 @@ paths:
           schema:
             type: string
       summary: End
+  /shutdownserver/:
+    post:
+      consumes:
+      - application/json
+      description: ShutDownServer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: ShutDownServer
   /start/{id}:
     post:
       consumes:

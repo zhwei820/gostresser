@@ -187,6 +187,26 @@
                 }
             }
         },
+        "/shutdownserver/": {
+            "post": {
+                "description": "ShutDownServer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "ShutDownServer",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/start/{id}": {
             "post": {
                 "description": "Start",
@@ -264,6 +284,9 @@
                 },
                 "h2": {
                     "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
                 },
                 "proxyaddr": {
                     "type": "string"

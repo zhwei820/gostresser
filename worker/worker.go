@@ -7,13 +7,11 @@ import (
 	"github.com/zhwei820/gostresser/utils"
 	"net/http"
 	gourl "net/url"
+	"os"
+	"os/exec"
 	"strconv"
-	"sync"
 	"time"
 )
-
-//var Workers = make(map[string]*requester.Work)
-var Workers sync.Map
 
 const (
 	headerRegexp = `^([\w-]+):\s*(.+)`
@@ -84,7 +82,7 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 	header.Set("User-Agent", ua)
 	req.Header = header
 
-	Workers.Store(worker_key, &requester.Work{
+	worker := &requester.Work{
 		Request:            req,
 		RequestBody:        bodyAll,
 		N:                  1000000,              // big num
@@ -97,17 +95,16 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 		H2:                 baseConf.H2,
 		ProxyAddr:          proxyURL,
 		Output:             "",
-	})
-	worker, _ := Workers.Load(worker_key)
-	worker.(*requester.Work).Init()
+	}
+	worker.Init()
 
 	if baseConf.Duration > 0 {
 		go func() {
 			time.Sleep(time.Duration(baseConf.Duration) * time.Second)
-			worker.(*requester.Work).Stop()
+			worker.Stop()
 		}()
 	}
-	worker.(*requester.Work).Run()
+	worker.Run(worker_key)
 
 }
 
@@ -120,11 +117,22 @@ func Run(baseConf *BaseConf) {
 }
 
 func Stop(baseConf *BaseConf) {
+	pid := os.Getpid()
+	cmdls := fmt.Sprintf("kill -1 %v", pid)
+	cmdl := exec.Command("bash", "-c", cmdls)
+	cmdl.Run()
+	ret, _ := cmdl.Output()
+	fmt.Printf("%s: \n%s", cmdls, ret)
 
-	for ii := range baseConf.ReqConfs {
-		worker_key := baseConf.Id.String() + strconv.Itoa(ii)
-		worker, _ := Workers.Load(worker_key)
-		worker.(*requester.Work).Stop()
-		Workers.Delete(worker_key)
-	}
+	// https://github.com/fvbock/endless/tree/master/examples
+}
+
+func ShutDownServer() {
+	pid := os.Getpid()
+	cmdls := fmt.Sprintf("kill -9 %v", pid) // shutdown anyway
+	cmdl := exec.Command("bash", "-c", cmdls)
+	cmdl.Run()
+	ret, _ := cmdl.Output()
+	fmt.Printf("%s: \n%s", cmdls, ret)
+
 }

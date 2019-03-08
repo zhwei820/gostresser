@@ -7,7 +7,7 @@
             <Row>
                 <Col offset="20">
                     <Button id="btn" type='primary' :disabled="startdisable" @click="startStressTest">START</Button>
-                    <Button id="btn1" type='error' :disabled="enddisable" @click="StopStressTest">END</Button>
+                    <Button id="btn1" type='error' :disabled=false @click="StopStressTest">END</Button>
                 </Col>
             </Row>
 
@@ -54,7 +54,7 @@
                 chartData: {
                     columns: ['ts',],
                     rows: [
-                        {'ts': '01-01',},
+                        // {'ts': '01-01',},
                     ]
                 },
                 formData: {},

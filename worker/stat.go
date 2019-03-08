@@ -47,17 +47,17 @@ func sum(ErrorDist map[string]int) int {
 func StatReqs() *StatRes {
 	UserCount := 0
 
-	Workers.Range(func(k, item interface{}) bool {
-		UserCount += item.(*requester.Work).C
+	requester.Reporters.Range(func(k, item interface{}) bool {
+		UserCount += item.(*requester.Rreport).C
 		return true
 	})
 
 	res := StatRes{
 		UserCount: UserCount,
 	}
-	Workers.Range(func(k, item1 interface{}) bool {
-		item := item1.(*requester.Work)
-		report := item.Report.Snapshot()
+	requester.Reporters.Range(func(k, item2 interface{}) bool {
+		item1 := item2.(*requester.Rreport)
+		report := item1.Snapshot()
 		mrt := 0.0
 		avgcl := 0.0
 		rps := 0
@@ -82,8 +82,8 @@ func StatReqs() *StatRes {
 			MinResponseTime:    report.ResMin,
 			MedianResponseTime: mrt,
 			CurrentRps:         rps,
-			Method:             item.Request.Method,
-			Name:               item.Request.URL.Host + item.Request.URL.Path,
+			Method:             item1.Method,
+			Name:               item1.Url,
 			NumRequests:        len(report.ResLats),
 			NumFailures:        sum(report.ErrorDist),
 		})

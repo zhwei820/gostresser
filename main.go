@@ -16,12 +16,8 @@
 package main
 
 import (
-	"github.com/google/gops/agent"
 	_ "github.com/zhwei820/gostresser/docs"
-	"log"
 	_ "net/http/pprof"
-	"os"
-	"os/signal"
 )
 
 // @title Swagger Example API
@@ -39,17 +35,7 @@ import (
 // @host localhost:8179
 // @BasePath /
 func main() {
-	if err := agent.Listen(agent.Options{}); err != nil {
-		log.Fatal(err)
-	}
 
-	go StartApi()
+	StartApi()
 
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	go func() {
-		<-c
-		os.Exit(0) // todo: clean resource
-	}()
-	select {}
 }

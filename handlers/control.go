@@ -35,3 +35,15 @@ func Stop(c *gin.Context) {
 	worker.Stop(baseConf)
 	c.JSON(200, "ok")
 }
+
+// @Summary ShutDownServer anyway
+// @Description ShutDownServer anyway
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} string	"ok"
+// @Router /shutdownserver/ [post]
+func ShutDownServer(c *gin.Context) {
+
+	worker.ShutDownServer()
+	c.JSON(200, "ok")
+}

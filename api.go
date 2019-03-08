@@ -1,10 +1,13 @@
 package main
 
 import (
+	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"github.com/zhwei820/gostresser/handlers"
+
+	"log"
 )
 
 func CORSMiddleware() gin.HandlerFunc {
@@ -38,8 +41,13 @@ func StartApi() {
 
 	r.POST("/start/:id/", handlers.Start)
 	r.POST("/stop/:id/", handlers.Stop)
+	r.POST("/shutdownserver/", handlers.ShutDownServer)
 
 	r.GET("/stat/", handlers.Stat)
 
-	r.Run("0.0.0.0:8179") // listen and serve on 0.0.0.0:8080
+	//r.Run("0.0.0.0:8179") // listen and serve on 0.0.0.0:8080
+
+	if err := endless.ListenAndServe("0.0.0.0:8179", r); err != nil {
+		log.Fatalln(err)
+	}
 }

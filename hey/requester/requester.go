@@ -47,6 +47,8 @@ type result struct {
 	contentLength int64
 }
 
+var Reporters sync.Map
+
 type Work struct {
 	// Request is the request to be made.
 	Request *http.Request
@@ -93,7 +95,7 @@ type Work struct {
 	stopCh   chan struct{}
 	start    time.Duration
 
-	Report *report
+	Report *Rreport
 }
 
 func (b *Work) writer() io.Writer {
@@ -113,10 +115,11 @@ func (b *Work) Init() {
 
 // Run makes all the requests, prints the summary. It blocks until
 // all work is done.
-func (b *Work) Run() {
+func (b *Work) Run(worker_key string) {
 	b.Init()
 	b.start = Now()
-	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start)
+	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start, b)
+	Reporters.Store(worker_key, b.Report)
 	// Run the reporter first, it polls the result channel until it is closed.
 	go func() {
 		runReporter(b.Report)

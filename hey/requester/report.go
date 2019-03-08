@@ -30,7 +30,10 @@ const (
 // We Report for max 1M results.
 const maxRes = 1000000
 
-type report struct {
+type Rreport struct {
+	C        int
+	Method   string
+	Url      string
 	avgTotal float64
 	fastest  float64
 	slowest  float64
@@ -64,9 +67,12 @@ type report struct {
 	w io.Writer
 }
 
-func newReport(w io.Writer, results chan *result, output string, n int, start time.Duration) *report {
+func newReport(w io.Writer, results chan *result, output string, n int, start time.Duration, b *Work) *Rreport {
 	cap := min(n, maxRes)
-	return &report{
+	return &Rreport{
+		C:           b.C,
+		Method:      b.Request.Method,
+		Url:         b.Request.URL.String(),
 		start:       start,
 		output:      output,
 		results:     results,
@@ -83,7 +89,7 @@ func newReport(w io.Writer, results chan *result, output string, n int, start ti
 	}
 }
 
-func runReporter(r *report) {
+func runReporter(r *Rreport) {
 	// Loop will continue until channel is closed
 	for res := range r.results {
 		r.numRes++
@@ -115,7 +121,7 @@ func runReporter(r *report) {
 	r.done <- true
 }
 
-func (r *report) finalize(total time.Duration) {
+func (r *Rreport) finalize(total time.Duration) {
 	r.total = total
 	r.rps = float64(r.numRes) / r.total.Seconds()
 	r.average = r.avgTotal / float64(len(r.lats))
@@ -127,7 +133,7 @@ func (r *report) finalize(total time.Duration) {
 	r.print()
 }
 
-func (r *report) print() {
+func (r *Rreport) print() {
 	buf := &bytes.Buffer{}
 	if err := newTemplate(r.output).Execute(buf, r.Snapshot()); err != nil {
 		log.Println("error:", err.Error())
@@ -138,11 +144,11 @@ func (r *report) print() {
 	r.printf("\n")
 }
 
-func (r *report) printf(s string, v ...interface{}) {
+func (r *Rreport) printf(s string, v ...interface{}) {
 	fmt.Fprintf(r.w, s, v...)
 }
 
-func (r *report) Snapshot() Report {
+func (r *Rreport) Snapshot() Report {
 	snapshot := Report{
 		Start:       r.start,
 		AvgTotal:    r.avgTotal,
@@ -217,7 +223,7 @@ func (r *report) Snapshot() Report {
 	return snapshot
 }
 
-func (r *report) latencies() []LatencyDistribution {
+func (r *Rreport) latencies() []LatencyDistribution {
 	pctls := []int{10, 25, 50, 75, 90, 95, 99}
 	data := make([]float64, len(pctls))
 	j := 0
@@ -237,7 +243,7 @@ func (r *report) latencies() []LatencyDistribution {
 	return res
 }
 
-func (r *report) histogram() []Bucket {
+func (r *Rreport) histogram() []Bucket {
 	bc := 10
 	buckets := make([]float64, bc+1)
 	counts := make([]int, bc+1)
