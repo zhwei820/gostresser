@@ -18,6 +18,7 @@ type server struct{}
 
 // SayHello implements helloworld.GreeterServer
 func (s *server) SayHello(ctx context.Context, in *pb.SayInput) (*pb.SayOutput, error) {
+	println("get SayHello")
 	return &pb.SayOutput{Title: "Hello " + in.Query}, nil
 }
 

@@ -3,13 +3,14 @@ package worker
 import (
 	. "github.com/zhwei820/gostresser/config"
 	"runtime"
+	"testing"
 )
 
-func init() {
+func TestRun(t *testing.T) {
 
 	reqConf := ReqConf{
-		Url:     "https://www.baidu.com/",
-		Method:  "Get",
+		Url:     "https://localhost:8000/",
+		Method:  "GET",
 		Headers: HeaderSlice{"Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7"},
 		Body:    "",
 		//BodyFile:"",
@@ -32,4 +33,5 @@ func init() {
 		ReqConfs:           []ReqConf{reqConf},
 	}
 	Run(&baseConf)
+	select {}
 }

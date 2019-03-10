@@ -18,6 +18,7 @@ package requester
 import (
 	"bytes"
 	"crypto/tls"
+	"fmt"
 	"golang.org/x/net/http2"
 	"io"
 	"io/ioutil"
@@ -119,8 +120,17 @@ func (b *Work) Run() {
 	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start)
 
 	// Run the reporter first, it polls the result channel until it is closed.
+
+	ticker := time.NewTicker(time.Second * 1)
+	go func() {
+		for t := range ticker.C {
+			fmt.Println("Tick at", t)
+			GrpcSayHello()
+		}
+	}()
 	go func() {
 		runReporter(b.Report)
+
 	}()
 	b.runWorkers()
 	b.Finish()
