@@ -19,6 +19,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
+	"github.com/zhwei820/gostresser/grpc"
 	"golang.org/x/net/http2"
 	"io"
 	"io/ioutil"
@@ -36,7 +37,7 @@ const maxIdleConn = 500
 
 type result struct {
 	err           error
-	statusCode    int
+	statusCode    int32
 	offset        time.Duration
 	duration      time.Duration
 	connDuration  time.Duration // connection setup(DNS lookup + Dial up) duration
@@ -125,7 +126,7 @@ func (b *Work) Run() {
 	go func() {
 		for t := range ticker.C {
 			fmt.Println("Tick at", t)
-			GrpcSayHello()
+			grpc.SayHello(b.Report.Snapshot())
 		}
 	}()
 	go func() {
@@ -154,7 +155,7 @@ func (b *Work) Finish() {
 func (b *Work) makeRequest(c *http.Client) {
 	s := Now()
 	var size int64
-	var code int
+	var code int32
 	var dnsStart, connStart, resStart, reqStart, delayStart time.Duration
 	var dnsDuration, connDuration, resDuration, reqDuration, delayDuration time.Duration
 	req := cloneRequest(b.Request, b.RequestBody)
@@ -187,7 +188,7 @@ func (b *Work) makeRequest(c *http.Client) {
 	resp, err := c.Do(req)
 	if err == nil {
 		size = resp.ContentLength
-		code = resp.StatusCode
+		code = int32(resp.StatusCode)
 		io.Copy(ioutil.Discard, resp.Body)
 		resp.Body.Close()
 	}

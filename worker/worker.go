@@ -1,4 +1,4 @@
-package worker
+package main
 
 import (
 	"fmt"
@@ -10,14 +10,6 @@ import (
 	"runtime"
 	"strconv"
 	"time"
-)
-
-var Workers = make(map[string]*requester.Work)
-
-const (
-	headerRegexp = `^([\w-]+):\s*(.+)`
-	authRegexp   = `^(.+):([^\s].+)`
-	heyUA        = "hey/0.0.1"
 )
 
 func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
@@ -83,7 +75,7 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 	header.Set("User-Agent", ua)
 	req.Header = header
 
-	Workers[worker_key] = &requester.Work{
+	worker := &requester.Work{
 		Request:            req,
 		RequestBody:        bodyAll,
 		N:                  1000000,              // big num
@@ -97,15 +89,15 @@ func workerRun(baseConf *BaseConf, reqConf ReqConf, worker_key string) {
 		ProxyAddr:          proxyURL,
 		Output:             "",
 	}
-	Workers[worker_key].Init()
+	worker.Init()
 
 	if baseConf.Duration > 0 {
 		go func() {
 			time.Sleep(time.Duration(baseConf.Duration) * time.Second)
-			Workers[worker_key].Stop()
+			worker.Stop()
 		}()
 	}
-	Workers[worker_key].Run()
+	worker.Run()
 
 }
 
@@ -120,6 +112,7 @@ func Run(baseConf *BaseConf) {
 func Stop(baseConf *BaseConf) {
 	for ii := range baseConf.ReqConfs {
 		worker_key := baseConf.Id.String() + strconv.Itoa(ii)
-		Workers[worker_key].Stop()
+		//Workes[worker_key].Stop()
+		println(worker_key)
 	}
 }

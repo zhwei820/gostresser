@@ -17,6 +17,7 @@ package requester
 import (
 	"bytes"
 	"fmt"
+	"github.com/zhwei820/gostresser/pb/say"
 	"io"
 	"log"
 	"sort"
@@ -48,7 +49,7 @@ type report struct {
 	resLats     []float64
 	delayLats   []float64
 	offsets     []float64
-	statusCodes []int
+	statusCodes []int32
 
 	results chan *result
 	done    chan bool
@@ -208,7 +209,7 @@ func (r *report) Snapshot() Report {
 	snapshot.ResMax = r.resLats[0]
 	snapshot.ResMin = r.resLats[len(r.resLats)-1]
 
-	statusCodeDist := make(map[int]int, len(snapshot.StatusCodes))
+	statusCodeDist := make(map[int32]int32, len(snapshot.StatusCodes))
 	for _, statusCode := range snapshot.StatusCodes {
 		statusCodeDist[statusCode]++
 	}
@@ -217,21 +218,21 @@ func (r *report) Snapshot() Report {
 	return snapshot
 }
 
-func (r *report) latencies() []LatencyDistribution {
-	pctls := []int{10, 25, 50, 75, 90, 95, 99}
+func (r *report) latencies() []*say.LatencyDistribution {
+	pctls := []int32{10, 25, 50, 75, 90, 95, 99}
 	data := make([]float64, len(pctls))
 	j := 0
 	for i := 0; i < len(r.lats) && j < len(pctls); i++ {
-		current := i * 100 / len(r.lats)
+		current := int32(i * 100 / len(r.lats))
 		if current >= pctls[j] {
 			data[j] = r.lats[i]
 			j++
 		}
 	}
-	res := make([]LatencyDistribution, len(pctls))
+	res := make([]*say.LatencyDistribution, len(pctls))
 	for i := 0; i < len(pctls); i++ {
 		if data[i] > 0 {
-			res[i] = LatencyDistribution{Percentage: pctls[i], Latency: data[i]}
+			res[i] = &say.LatencyDistribution{Percentage: pctls[i], Latency: data[i]}
 		}
 	}
 	return res
@@ -271,6 +272,10 @@ func (r *report) histogram() []Bucket {
 }
 
 type Report struct {
+	Id     string `json:"id" bson:"id"`
+	Method string `json:"method" bson:"method"`
+	Name   string `json:"name" bson:"name"`
+
 	Start    time.Duration
 	AvgTotal float64
 	Fastest  float64
@@ -301,17 +306,17 @@ type Report struct {
 	ResLats     []float64
 	DelayLats   []float64
 	Offsets     []float64
-	StatusCodes []int
+	StatusCodes []int32
 
 	Total time.Duration
 
-	ErrorDist      map[string]int
-	StatusCodeDist map[int]int
+	ErrorDist      map[string]int32
+	StatusCodeDist map[int32]int32
 	SizeTotal      int64
 	SizeReq        int64
 	NumRes         int64
 
-	LatencyDistribution []LatencyDistribution
+	LatencyDistribution []*say.LatencyDistribution
 	Histogram           []Bucket
 }
 
