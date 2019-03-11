@@ -28,9 +28,9 @@ func GrpcSayHello() {
 	if len(os.Args) > 1 {
 		name = os.Args[1]
 	}
-	r, err := c.SayHello(context.Background(), &pb.SayInput{Query: name})
+	r, err := c.SayHello(context.Background(), &pb.SayInput{Method: name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	fmt.Printf("\nGreeting: %s\n", r.Title)
+	fmt.Printf("\nGreeting: %s\n", r.Msg)
 }

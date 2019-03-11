@@ -4,5 +4,5 @@
 package say
 
 type SayService struct {
-	SayHello func(input []byte) (out []byte, err error) `simple:"true"`
+	SayHello func(input []byte) ([]byte, error) `simple:"true"`
 }

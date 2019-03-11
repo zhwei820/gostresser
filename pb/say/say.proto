@@ -24,6 +24,6 @@ message SayInput {
 }
 
 message SayOutput {
-    string code = 1;
-    string msg = 2;
+    string Code = 1;
+    string Msg = 2;
 }
