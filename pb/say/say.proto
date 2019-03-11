@@ -10,21 +10,20 @@ service SayService {
 }
 
 message SayInput {
-    string query = 1; // query
-    sint64 page_number = 2; // 页数
-    sint64 result_per_page = 3; // 每页数量
-
+    string Id = 1; // id
+    string Method = 2;
+    string Name = 3;
+    int32 NumRequests = 4;
+    int32 NumFailures = 5;
+    double MedianResponseTime = 6;
+    string AvgResponseTime = 7;
+    double MinResponseTime = 8;
+    double MaxResponseTime = 9;
+    double AvgContentLength = 10;
+    int32 CurrentRps = 11;
 }
 
 message SayOutput {
-    string url = 1;
-    string title = 2;
-    repeated string snippets = 3;
-    repeated SayResult results = 4;
-}
-
-message SayResult {
-    string url = 1;
-    string title = 2;
-    repeated string snippets = 3;
+    string code = 1;
+    string msg = 2;
 }
