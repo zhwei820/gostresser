@@ -19,6 +19,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
+	"github.com/zhwei820/gostresser/stat"
 	"golang.org/x/net/http2"
 	"io"
 	"io/ioutil"
@@ -116,7 +117,7 @@ func (b *Work) Init() {
 // all work is done.
 func (b *Work) Run() {
 	b.Init()
-	b.start = Now()
+	b.start = stat.Now()
 	b.Report = newReport(b.writer(), b.results, b.Output, b.N, b.start)
 
 	// Run the reporter first, it polls the result channel until it is closed.
@@ -133,7 +134,10 @@ func (b *Work) Run() {
 
 	}()
 	b.runWorkers()
+
 	b.Finish()
+	SayHello(b.Report.Snapshot(), b.Id)
+
 }
 
 func (b *Work) Stop() {
@@ -145,14 +149,14 @@ func (b *Work) Stop() {
 
 func (b *Work) Finish() {
 	close(b.results)
-	total := Now() - b.start
+	total := stat.Now() - b.start
 	// Wait until the reporter is done.
 	<-b.Report.done
 	b.Report.finalize(total)
 }
 
 func (b *Work) makeRequest(c *http.Client) {
-	s := Now()
+	s := stat.Now()
 	var size int64
 	var code int32
 	var dnsStart, connStart, resStart, reqStart, delayStart time.Duration
@@ -160,27 +164,27 @@ func (b *Work) makeRequest(c *http.Client) {
 	req := cloneRequest(b.Request, b.RequestBody)
 	trace := &httptrace.ClientTrace{
 		DNSStart: func(info httptrace.DNSStartInfo) {
-			dnsStart = Now()
+			dnsStart = stat.Now()
 		},
 		DNSDone: func(dnsInfo httptrace.DNSDoneInfo) {
-			dnsDuration = Now() - dnsStart
+			dnsDuration = stat.Now() - dnsStart
 		},
 		GetConn: func(h string) {
-			connStart = Now()
+			connStart = stat.Now()
 		},
 		GotConn: func(connInfo httptrace.GotConnInfo) {
 			if !connInfo.Reused {
-				connDuration = Now() - connStart
+				connDuration = stat.Now() - connStart
 			}
-			reqStart = Now()
+			reqStart = stat.Now()
 		},
 		WroteRequest: func(w httptrace.WroteRequestInfo) {
-			reqDuration = Now() - reqStart
-			delayStart = Now()
+			reqDuration = stat.Now() - reqStart
+			delayStart = stat.Now()
 		},
 		GotFirstResponseByte: func() {
-			delayDuration = Now() - delayStart
-			resStart = Now()
+			delayDuration = stat.Now() - delayStart
+			resStart = stat.Now()
 		},
 	}
 	req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
@@ -191,7 +195,7 @@ func (b *Work) makeRequest(c *http.Client) {
 		io.Copy(ioutil.Discard, resp.Body)
 		resp.Body.Close()
 	}
-	t := Now()
+	t := stat.Now()
 	resDuration = t - resStart
 	finish := t - s
 	b.results <- &result{

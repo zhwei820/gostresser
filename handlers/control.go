@@ -22,13 +22,16 @@ func Start(c *gin.Context) {
 
 	baseConf, _ := config.BaseConfManager().FindOne(id)
 
-	cmd1 := exec.Command("sh", "-c", "./worker/worker -n 10000 https://bh.sb/")
-	err := cmd1.Start()
+	cmd1 := exec.Command("sh", "-c", "./worker/worker -n 30000 -c 10 http://127.0.0.1:8000")
+	err := cmd1.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	ChildPids[baseConf.Id.String()+baseConf.ReqConfs[0].Url] = cmd1.Process.Pid
+	out, _ := cmd1.Output()
+	fmt.Printf("%s\n", out)
+	fmt.Printf("%s\n", out)
 	c.JSON(200, "ok")
 }
 

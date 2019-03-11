@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"github.com/zhwei820/gostresser/grpc"
 	pb "github.com/zhwei820/gostresser/pb/say"
+	"github.com/zhwei820/gostresser/stat"
 	"golang.org/x/net/context"
 	"log"
 )
 
-func SayHello(report Report, id string) {
+func SayHello(report stat.Report, id string) {
 
 	r, err := grpc.GrpcSayClient.SayHello(context.Background(), &pb.SayInput{Id: id,
 		Method:              report.Method,

@@ -54,17 +54,16 @@ func StatReqs() *StatRes {
 		mrt := 0.0
 		avgcl := 0.0
 		rps := 0
+		interval := int((Now() - report.Start) / time.Second)
 
 		if int(len(report.ResLats)/2) > 0 {
 			mrt = report.ResLats[int(len(report.ResLats)/2)]
 			avgcl = float64(report.SizeTotal) / float64(len(report.ResLats))
 
-			interval := int((Now() - report.Start) / time.Second)
-			if report.Rps > 0 || interval == 0 {
-				rps = 0
-			} else {
-				rps = len(report.ResLats) / interval
-			}
+			rps = len(report.ResLats) / interval
+		}
+		if report.Rps > 0 || interval == 0 {
+			rps = 0
 		}
 
 		AvgRes := fmt.Sprintf("%f", report.AvgRes)
