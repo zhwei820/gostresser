@@ -1,10 +1,14 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/zhwei820/gostresser/config"
-	"github.com/zhwei820/gostresser/worker"
+	"log"
+	"os/exec"
 )
+
+var ChildPids = make(map[string]int)
 
 // @Summary Start
 // @Description Start
@@ -17,7 +21,14 @@ func Start(c *gin.Context) {
 	id := c.Param("id")
 
 	baseConf, _ := config.BaseConfManager().FindOne(id)
-	worker.Run(baseConf)
+
+	cmd1 := exec.Command("sh", "-c", "./worker/worker -n 10000 https://bh.sb/")
+	err := cmd1.Start()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ChildPids[baseConf.Id.String()+baseConf.ReqConfs[0].Url] = cmd1.Process.Pid
 	c.JSON(200, "ok")
 }
 
@@ -32,6 +43,21 @@ func Stop(c *gin.Context) {
 	id := c.Param("id")
 
 	baseConf, _ := config.BaseConfManager().FindOne(id)
-	worker.Stop(baseConf)
+	stopcmd := fmt.Sprintf("kill -9 %v", ChildPids[baseConf.Id.String()+baseConf.ReqConfs[0].Url])
+
+	cmd1 := exec.Command("sh", "-c", stopcmd)
+	err := cmd1.Start()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	c.JSON(200, "ok")
+}
+
+func getStartCmd() string {
+	return ""
+}
+
+func getStopCmd() string {
+	return ""
 }

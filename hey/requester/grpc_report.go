@@ -8,9 +8,9 @@ import (
 	"log"
 )
 
-func SayHello(report Report) {
+func SayHello(report Report, id string) {
 
-	r, err := grpc.GrpcSayClient.SayHello(context.Background(), &pb.SayInput{Id: report.Id,
+	r, err := grpc.GrpcSayClient.SayHello(context.Background(), &pb.SayInput{Id: id,
 		Method:              report.Method,
 		Name:                report.Name,
 		Start:               int64(report.Start),

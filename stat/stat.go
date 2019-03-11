@@ -2,7 +2,6 @@ package stat
 
 import (
 	"fmt"
-	"github.com/zhwei820/gostresser/hey/requester"
 	"sync"
 	"time"
 )
@@ -13,7 +12,7 @@ type SingleStat struct {
 	Method             string  `json:"method" bson:"method"`
 	Name               string  `json:"name" bson:"name"`
 	NumRequests        int     `json:"num_requests" bson:"num_requests"`
-	NumFailures        int     `json:"num_failures" bson:"num_failures"`
+	NumFailures        int32   `json:"num_failures" bson:"num_failures"`
 	MedianResponseTime float64 `json:"median_response_time" bson:"median_response_time"`
 	AvgResponseTime    string  `json:"avg_response_time" bson:"avg_response_time"`
 	MinResponseTime    float64 `json:"min_response_time" bson:"min_response_time"`
@@ -39,8 +38,8 @@ func mean(lats []float64) float64 {
 	}
 	return res / float64(len(lats))
 }
-func sum(ErrorDist map[string]int) int {
-	res := 0
+func sum(ErrorDist map[string]int32) int32 {
+	var res int32 = 0
 	for _, item := range ErrorDist {
 		res += item
 	}
@@ -51,7 +50,7 @@ func StatReqs() *StatRes {
 
 	res := StatRes{}
 	Reporters.Range(func(key, value interface{}) bool {
-		report := value.(*requester.Report)
+		report := value.(*Report)
 		mrt := 0.0
 		avgcl := 0.0
 		rps := 0
@@ -60,7 +59,7 @@ func StatReqs() *StatRes {
 			mrt = report.ResLats[int(len(report.ResLats)/2)]
 			avgcl = float64(report.SizeTotal) / float64(len(report.ResLats))
 
-			interval := int((requester.Now() - report.Start) / time.Second)
+			interval := int((Now() - report.Start) / time.Second)
 			if report.Rps > 0 || interval == 0 {
 				rps = 0
 			} else {

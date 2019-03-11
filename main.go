@@ -17,12 +17,9 @@ package main
 
 import (
 	_ "github.com/zhwei820/gostresser/docs"
-	"log"
-	"net/http"
+	"github.com/zhwei820/gostresser/grpc"
 	"os"
 	"os/signal"
-
-	_ "net/http/pprof"
 )
 
 // @title Swagger Example API
@@ -41,9 +38,7 @@ import (
 // @BasePath /
 func main() {
 
-	go func() {
-		log.Println(http.ListenAndServe("localhost:8780", nil))
-	}()
+	go grpc.GrpcServer()
 
 	go StartApi()
 

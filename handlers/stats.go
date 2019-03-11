@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/zhwei820/gostresser/worker"
+	"github.com/zhwei820/gostresser/stat"
 )
 
 // @Summary stat
@@ -12,6 +12,6 @@ import (
 // @Success 200 {string} string	"ok"
 // @Router /stat [get]
 func Stat(c *gin.Context) {
-	res := worker.StatReqs()
+	res := stat.StatReqs()
 	c.JSON(200, res)
 }

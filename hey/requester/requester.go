@@ -19,7 +19,6 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
-	"github.com/zhwei820/gostresser/grpc"
 	"golang.org/x/net/http2"
 	"io"
 	"io/ioutil"
@@ -49,7 +48,7 @@ type result struct {
 }
 
 type Work struct {
-
+	Id string
 	// Request is the request to be made.
 	Request *http.Request
 
@@ -126,7 +125,7 @@ func (b *Work) Run() {
 	go func() {
 		for t := range ticker.C {
 			fmt.Println("Tick at", t)
-			grpc.SayHello(b.Report.Snapshot())
+			SayHello(b.Report.Snapshot(), b.Id)
 		}
 	}()
 	go func() {

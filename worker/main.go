@@ -24,6 +24,7 @@ const (
 )
 
 var (
+	id          = flag.String("id", "", "")
 	m           = flag.String("m", "GET", "")
 	headers     = flag.String("h", "", "")
 	body        = flag.String("d", "", "")
@@ -198,6 +199,7 @@ func main() {
 	req.Header = header
 
 	w := &requester.Work{
+		Id:                 *id,
 		Request:            req,
 		RequestBody:        bodyAll,
 		N:                  num,

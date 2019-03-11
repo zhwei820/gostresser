@@ -18,6 +18,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/zhwei820/gostresser/pb/say"
+	"github.com/zhwei820/gostresser/stat"
 	"io"
 	"log"
 	"sort"
@@ -55,7 +56,7 @@ type report struct {
 	done    chan bool
 	total   time.Duration
 
-	errorDist map[string]int
+	errorDist map[string]int32
 	lats      []float64
 	sizeTotal int64
 	numRes    int64
@@ -72,7 +73,7 @@ func newReport(w io.Writer, results chan *result, output string, n int, start ti
 		output:      output,
 		results:     results,
 		done:        make(chan bool, 1),
-		errorDist:   make(map[string]int),
+		errorDist:   make(map[string]int32),
 		w:           w,
 		connLats:    make([]float64, 0, cap),
 		dnsLats:     make([]float64, 0, cap),
@@ -80,7 +81,7 @@ func newReport(w io.Writer, results chan *result, output string, n int, start ti
 		resLats:     make([]float64, 0, cap),
 		delayLats:   make([]float64, 0, cap),
 		lats:        make([]float64, 0, cap),
-		statusCodes: make([]int, 0, cap),
+		statusCodes: make([]int32, 0, cap),
 	}
 }
 
@@ -143,8 +144,8 @@ func (r *report) printf(s string, v ...interface{}) {
 	fmt.Fprintf(r.w, s, v...)
 }
 
-func (r *report) Snapshot() Report {
-	snapshot := Report{
+func (r *report) Snapshot() stat.Report {
+	snapshot := stat.Report{
 		Start:       r.start,
 		AvgTotal:    r.avgTotal,
 		Average:     r.average,
@@ -165,7 +166,7 @@ func (r *report) Snapshot() Report {
 		ResLats:     make([]float64, len(r.lats)),
 		DelayLats:   make([]float64, len(r.lats)),
 		Offsets:     make([]float64, len(r.lats)),
-		StatusCodes: make([]int, len(r.lats)),
+		StatusCodes: make([]int32, len(r.lats)),
 	}
 
 	if len(r.lats) == 0 {
@@ -260,73 +261,13 @@ func (r *report) histogram() []Bucket {
 			bi++
 		}
 	}
-	res := make([]Bucket, len(buckets))
+	res := make([]stat.Bucket, len(buckets))
 	for i := 0; i < len(buckets); i++ {
-		res[i] = Bucket{
+		res[i] = stat.Bucket{
 			Mark:      buckets[i],
 			Count:     counts[i],
 			Frequency: float64(counts[i]) / float64(len(r.lats)),
 		}
 	}
 	return res
-}
-
-type Report struct {
-	Id     string `json:"id" bson:"id"`
-	Method string `json:"method" bson:"method"`
-	Name   string `json:"name" bson:"name"`
-
-	Start    time.Duration
-	AvgTotal float64
-	Fastest  float64
-	Slowest  float64
-	Average  float64
-	Rps      float64
-
-	AvgConn  float64
-	AvgDNS   float64
-	AvgReq   float64
-	AvgRes   float64
-	AvgDelay float64
-	ConnMax  float64
-	ConnMin  float64
-	DnsMax   float64
-	DnsMin   float64
-	ReqMax   float64
-	ReqMin   float64
-	ResMax   float64
-	ResMin   float64
-	DelayMax float64
-	DelayMin float64
-
-	Lats        []float64
-	ConnLats    []float64
-	DnsLats     []float64
-	ReqLats     []float64
-	ResLats     []float64
-	DelayLats   []float64
-	Offsets     []float64
-	StatusCodes []int32
-
-	Total time.Duration
-
-	ErrorDist      map[string]int32
-	StatusCodeDist map[int32]int32
-	SizeTotal      int64
-	SizeReq        int64
-	NumRes         int64
-
-	LatencyDistribution []*say.LatencyDistribution
-	Histogram           []Bucket
-}
-
-type LatencyDistribution struct {
-	Percentage int
-	Latency    float64
-}
-
-type Bucket struct {
-	Mark      float64
-	Count     int
-	Frequency float64
 }
