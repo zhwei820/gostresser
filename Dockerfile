@@ -17,7 +17,9 @@ COPY --from=builder /code/ui/public/externalConfig.js.tmpl /tmp/
 EXPOSE 80
 CMD envsubst < /tmp/externalConfig.js.tmpl > /usr/share/nginx/html/externalConfig.js && nginx -g 'daemon off;'
 
-COPY ./gostresser ./
-COPY ./worker ./worker/
+COPY --from=builder /code/ui/deploy/start.sh ./
+COPY --from=builder /code/gostresser ./
+COPY --from=builder /code/worker ./worker/
+COPY --from=builder /code/config ./config/
 
 # docker build . -t daocloud.io/zhwei820/gostresser
