@@ -6,6 +6,7 @@
 
 * It builds a web service based on [gin](https://github.com/gin-gonic/gin), store stress test data in mongo. When you start a stress test, it create some modified [hey](https://github.com/rakyll/hey) workers, and the workers swarm requests to the targets urls. The hey workers transport request stat result to stress server through Grpc, periodically.
 
+
 ## Usage
 
 * a. docker-compose up

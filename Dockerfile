@@ -1,16 +1,23 @@
+FROM node:10.15.1-jessie as builder
+WORKDIR /code
+COPY . ./
+WORKDIR /code/ui
+
+RUN yarn install
+RUN yarn build
+
+# -----
 
 FROM xqdocker/ubuntu-nginx
 MAINTAINER HelloFresh
 WORKDIR /code
-COPY ./ui/deploy/default.conf /etc/nginx/conf.d/default.conf
-COPY ./ui/dist/ /usr/share/nginx/html/
-COPY ./ui/public/externalConfig.js.tmpl /tmp/
+COPY --from=builder /code/ui/deploy/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /code/ui/dist/ /usr/share/nginx/html/
+COPY --from=builder /code/ui/public/externalConfig.js.tmpl /tmp/
 EXPOSE 80
 CMD envsubst < /tmp/externalConfig.js.tmpl > /usr/share/nginx/html/externalConfig.js && nginx -g 'daemon off;'
 
-COPY ./ui/deploy/start.sh ./
 COPY ./gostresser ./
 COPY ./worker ./worker/
-COPY ./config ./config/
 
 # docker build . -t daocloud.io/zhwei820/gostresser

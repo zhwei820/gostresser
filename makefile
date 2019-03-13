@@ -11,7 +11,7 @@ build_ui:
 	cd ui; yarn install; yarn build; cd -
 
 build_image:
-	docker build . -t daocloud.io/zhwei820/gostresser
+	docker build . -f Dockerfile.local -t daocloud.io/zhwei820/gostresser
 
 build_go: build_worker build_web 
 
