@@ -20,18 +20,41 @@ export function cols(vm) {
         {
             title: 'Median (ms)',
             key: 'median_response_time',
+            render: (h, params) => {
+                return (
+                    <div>{(params.row.median_response_time * 1000).toFixed(4)}</div>
+                )
+            },
         },
         {
             title: 'Average (ms)',
             key: 'avg_response_time',
+            render: (h, params) => {
+                return (
+                    <div>{(params.row.avg_response_time * 1000).toFixed(4)}</div>
+                )
+            },
+
         },
         {
             title: 'Min (ms)',
             key: 'min_response_time',
+            render: (h, params) => {
+                return (
+                    <div>{(params.row.min_response_time * 1000).toFixed(4)}</div>
+                )
+            },
+
         },
         {
             title: 'Max (ms)',
             key: 'max_response_time',
+            render: (h, params) => {
+                return (
+                    <div>{(params.row.max_response_time * 1000).toFixed(4)}</div>
+                )
+            },
+
         },
         {
             title: 'Content Size (bytes)',

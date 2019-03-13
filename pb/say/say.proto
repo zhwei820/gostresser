@@ -16,7 +16,7 @@ message SayInput {
     int32 NumRequests = 4;
     int32 NumFailures = 5;
     double MedianResponseTime = 6;
-    string AvgResponseTime = 7;
+    double AvgResponseTime = 7;
     double MinResponseTime = 8;
     double MaxResponseTime = 9;
     double AvgContentLength = 10;

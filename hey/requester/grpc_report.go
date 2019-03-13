@@ -1,7 +1,6 @@
 package requester
 
 import (
-	"fmt"
 	"github.com/zhwei820/gostresser/grpc"
 	pb "github.com/zhwei820/gostresser/pb/say"
 	"github.com/zhwei820/gostresser/stat"
@@ -38,13 +37,14 @@ func SayHello(report stat.Report, id string, req *http.Request) {
 	}
 	rps = crps
 	if report.Rps > 0 {
+
 		rps = int(report.Rps)
+	} else {
+		report.AvgRes /= float64(len(report.ResLats))
 	}
-	//println(report.Rps)
-	AvgRes := fmt.Sprintf("%f", report.AvgRes)
 	res := stat.SingleStat{
 		AvgContentLength:   avgcl,
-		AvgResponseTime:    AvgRes,
+		AvgResponseTime:    report.AvgRes,
 		MaxResponseTime:    report.ResMax,
 		MinResponseTime:    report.ResMin,
 		MedianResponseTime: mrt,
