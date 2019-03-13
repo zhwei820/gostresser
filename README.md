@@ -12,7 +12,7 @@
   * open [http://localhost:8082/testconf](http://localhost:8082/testconf).
 
 * b. 
-  * make build_go
+  * make build_go (better behind a proxy if in china)
   * make serve_api
   * make serve_ui (in another terminal)
   * open [http://localhost:8082/testconf](http://localhost:8082/testconf).
