@@ -12,6 +12,7 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/zhwei820/gostresser/hey/requester"
@@ -217,9 +218,10 @@ func main() {
 	w.Init()
 
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
+	signal.Notify(c, os.Interrupt, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGSTOP)
 	go func() {
-		<-c
+		a := <-c
+		println(a)
 		w.Stop()
 	}()
 	if dur > 0 {

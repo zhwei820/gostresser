@@ -54,7 +54,7 @@ func Stop(c *gin.Context) {
 	baseConf, _ := config.BaseConfManager().FindOne(id)
 	for _, item := range baseConf.ReqConfs {
 
-		stopcmd := fmt.Sprintf("kill -9 %v", ChildPids[baseConf.Id.Hex()+item.Url])
+		stopcmd := fmt.Sprintf("ps -ef | grep %v| grep -v grep |awk \"{print \\$2}\"|xargs kill -2", ChildPids[baseConf.Id.Hex()+item.Url])
 		println(stopcmd)
 		cmd1 := exec.Command("sh", "-c", stopcmd)
 		err := cmd1.Start()
