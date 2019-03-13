@@ -1,0 +1,2 @@
+HostURL: "mongodb://mongodb:27017/testdb"
+DBName:  "testdb"

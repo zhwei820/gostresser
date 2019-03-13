@@ -4,30 +4,36 @@ import (
 	"fmt"
 	"github.com/globalsign/mgo"
 	"github.com/json-iterator/go"
+	"github.com/micro/go-config"
 	"github.com/narup/gmgo"
 	"log"
+	"os"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 var Dbconfig = gmgo.DbConfig{
-	HostURL: "mongodb://localhost:27017/userdb",
-	DBName:  "userdb"}
+	HostURL: "mongodb://localhost:27017/testdb",
+	DBName:  "testdb",
+}
 
 var TestDB gmgo.Db
 
 func init() {
+	build_env := os.Getenv("BUILD_ENV")
+	if build_env == "not_dev" {
+		config.LoadFile("./config/config.yaml")
+		config.Scan(&Dbconfig)
+	}
 	setupDB()
 }
 func setupDB() {
-	if err := gmgo.Setup(gmgo.DbConfig{
-		HostURL: "mongodb://localhost:27017/userdb",
-		DBName:  "userdb"}); err != nil {
+	if err := gmgo.Setup(Dbconfig); err != nil {
 		log.Fatalf("Database connection error : %s.\n", err)
 		return
 	}
 
-	newDb, err := gmgo.Get("userdb")
+	newDb, err := gmgo.Get("testdb")
 	if err != nil {
 		log.Fatalf("Db connection error : %s.\n", err)
 	}
