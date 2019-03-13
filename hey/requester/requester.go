@@ -126,7 +126,7 @@ func (b *Work) Run() {
 	go func() {
 		for t := range ticker.C {
 			fmt.Println("Tick at", t)
-			SayHello(b.Report.Snapshot(), b.Id)
+			SayHello(b.Report.Snapshot(), b.Id, b.Request)
 		}
 	}()
 	go func() {
@@ -135,7 +135,7 @@ func (b *Work) Run() {
 	b.runWorkers()
 	b.Finish()
 
-	SayHello(b.Report.Snapshot(), b.Id)
+	SayHello(b.Report.Snapshot(), b.Id, b.Request)
 
 }
 

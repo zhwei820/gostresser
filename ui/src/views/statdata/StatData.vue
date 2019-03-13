@@ -2,6 +2,7 @@
     <div style="margin-top: 50px">
         <Button id="btn" type='primary' :disabled="startdisable" @click="startStressTest">START</Button>
         <Button id="btn2" type='primary' :disabled="enddisable" @click="StopStressTest">END</Button>
+        <Button id="btn3" type='primary' :disabled="startdisable" @click="edit">Edit</Button>
 
         <Card>
             <h1 slot="title">Stress Data Stat</h1>
@@ -43,9 +44,9 @@
                 startdisable: false,
                 enddisable: true,
                 chartData: {
-                    columns: ['ts', ],
+                    columns: ['ts',],
                     rows: [
-                        {'ts': '01-01', },
+                        {'ts': '01-01',},
                     ]
                 },
                 formData: {},
@@ -57,9 +58,20 @@
         computed: {
             columns() {
                 return cols(this)
+            },
+            id() {
+                if (!this.copy) {
+                    const id = this.$route.params.id
+                    return id === 'null' ? null : id
+                }
+                return null
             }
         },
         methods: {
+            edit() {
+                this.$router.push({name: 'testconfDetail', params: {id: this.id}})
+            },
+
             startStressTest() {
                 const id = this.$route.params.id
                 StartStress(id)

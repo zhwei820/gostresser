@@ -54,6 +54,7 @@ var (
 var usage = `Usage: hey [options...] <url>
 
 Options:
+  -id  id.
   -n  Number of requests to run. Default is 200.
   -c  Number of requests to run concurrently. Total number of requests cannot
       be smaller than the concurrency level. Default is 50.

@@ -14,14 +14,14 @@ type BaseConf struct {
 	H2   bool   `json:"h2" bson:"h2"`     // Enable HTTP/2.
 	Cpus int    `json:"cpus" bson:"cpus"` // Number of used cpu cores. (default for current machine is %d cores)
 
-	DisableCompression bool      `json:"disablecompression" bson:"disablecompression"` // Disable compression.
-	DisableKeepAlives  bool      `json:"disablekeepalives" bson:"disablekeepalives"`   // Disable keep-alive, prevents re-use of TCP connections between different HTTP requests.
-	DisableRedirects   bool      `json:"disableredirects" bson:"disableredirects"`     // Disable following of HTTP redirects
-	ProxyAddr          string    `json:"proxyaddr" bson:"proxyaddr"`                   // HTTP Proxy address as host:port.
-	Timeout            int       `json:"timeout" bson:"timeout"`                       // Timeout for each request in seconds. Default is 20, use 0 for infinite.
-	Duration           int       `json:"duration" bson:"duration"`                     // Duration of a stress round (in second)
-	Concurrency        int       `json:"concurrency" bson:"concurrency"`               // Num of Concurrent user
-	ReqConfs           []ReqConf `json:"reqconfs" bson:"reqconfs"`
+	DisableCompression bool       `json:"disablecompression" bson:"disablecompression"` // Disable compression.
+	DisableKeepAlives  bool       `json:"disablekeepalives" bson:"disablekeepalives"`   // Disable keep-alive, prevents re-use of TCP connections between different HTTP requests.
+	DisableRedirects   bool       `json:"disableredirects" bson:"disableredirects"`     // Disable following of HTTP redirects
+	ProxyAddr          string     `json:"proxyaddr" bson:"proxyaddr"`                   // HTTP Proxy address as host:port.
+	Timeout            int        `json:"timeout" bson:"timeout"`                       // Timeout for each request in seconds. Default is 20, use 0 for infinite.
+	Duration           int        `json:"duration" bson:"duration"`                     // Duration of a stress round (in second)
+	Concurrency        int        `json:"concurrency" bson:"concurrency"`               // Num of Concurrent user
+	ReqConfs           []*ReqConf `json:"reqconfs" bson:"reqconfs"`
 }
 
 // Each of your data model that needs to be persisted should implment gmgo.Document interface

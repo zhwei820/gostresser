@@ -7,6 +7,7 @@ import (
 	"github.com/zhwei820/gostresser/stat"
 	"golang.org/x/net/context"
 	"log"
+	"net/http"
 	"time"
 )
 
@@ -18,7 +19,7 @@ func sum(ErrorDist map[string]int32) int32 {
 	return res
 }
 
-func SayHello(report stat.Report, id string) {
+func SayHello(report stat.Report, id string, req *http.Request) {
 
 	mrt := 0.0
 	avgcl := 0.0
@@ -49,13 +50,13 @@ func SayHello(report stat.Report, id string) {
 		MedianResponseTime: mrt,
 		CurrentRps:         int32(crps),
 		Rps:                int32(rps),
-		Method:             report.Method,
-		Name:               report.Name,
+		Method:             req.Method,
+		Name:               req.URL.String(),
 		NumRequests:        int32(len(report.ResLats)),
 		NumFailures:        sum(report.ErrorDist),
 	}
 
-	r, err := grpc.GrpcSayClient.SayHello(context.Background(), &pb.SayInput{
+	_, err := grpc.GrpcSayClient.SayHello(context.Background(), &pb.SayInput{
 		Id:                 id,
 		AvgContentLength:   res.AvgContentLength,
 		AvgResponseTime:    res.AvgResponseTime,
@@ -72,5 +73,4 @@ func SayHello(report stat.Report, id string) {
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	fmt.Printf("\nGreeting: %s\n", r.Msg)
 }
