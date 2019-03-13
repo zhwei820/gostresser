@@ -39,7 +39,7 @@ export function cols(vm) {
         },
         {
             title: '# reqs/sec',
-            key: 'current_rps',
+            key: 'rps',
         },
 
     ]

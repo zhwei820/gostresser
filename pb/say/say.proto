@@ -5,58 +5,31 @@ package say;
 option optimize_for = SPEED;
 
 service SayService {
-  rpc SayHello(SayInput) returns (SayOutput) {}
+    rpc SayHello (SayInput) returns (SayOutput) {
+    }
 }
 
 message SayInput {
-  string Id = 1; // id
-  string Method = 2;
-  string Name = 3;
-
-  int64 Start = 4;
-  double AvgTotal = 5;
-  double Fastest = 6;
-  double Slowest = 7;
-  double Average = 8;
-  double Rps = 9;
-  double AvgConn = 10;
-  double AvgDNS = 11;
-  double AvgReq = 12;
-  double AvgRes = 13;
-  double AvgDelay = 14;
-  double ConnMax = 15;
-  double ConnMin = 16;
-  double DnsMax = 17;
-  double DnsMin = 18;
-  double ReqMax = 19;
-  double ReqMin = 20;
-  double ResMax = 21;
-  double ResMin = 22;
-  double DelayMax = 23;
-  double DelayMin = 24;
-  repeated double Lats = 25;
-  repeated double ConnLats = 26;
-  repeated double DnsLats = 27;
-  repeated double ReqLats = 28;
-  repeated double ResLats = 29;
-  repeated double DelayLats = 30;
-  repeated double Offsets = 31;
-  repeated int32 StatusCodes = 32;
-  int32 Total = 33;
-  map<string, int32> ErrorDist = 34;
-  map<int32, int32> StatusCodeDist = 35;
-  int64 SizeTotal = 36;
-  int64 SizeReq = 37;
-  int64 NumRes = 38;
-  repeated LatencyDistribution LatencyDistribution = 39;
+    string Id = 1; // id
+    string Method = 2;
+    string Name = 3;
+    int32 NumRequests = 4;
+    int32 NumFailures = 5;
+    double MedianResponseTime = 6;
+    string AvgResponseTime = 7;
+    double MinResponseTime = 8;
+    double MaxResponseTime = 9;
+    double AvgContentLength = 10;
+    int32 CurrentRps = 11;
+    int32 Rps = 12;
 }
 
 message LatencyDistribution {
-  int32 Percentage = 1;
-  double Latency = 2;
+    int32 Percentage = 1;
+    double Latency = 2;
 }
 
 message SayOutput {
-  string Code = 1;
-  string Msg = 2;
+    string Code = 1;
+    string Msg = 2;
 }

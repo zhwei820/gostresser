@@ -194,8 +194,8 @@ func (r *report) Snapshot() stat.Report {
 	sort.Float64s(r.resLats)
 	sort.Float64s(r.delayLats)
 
-	snapshot.Histogram = r.histogram()
-	snapshot.LatencyDistribution = r.latencies()
+	//snapshot.Histogram = r.histogram()
+	//snapshot.LatencyDistribution = r.latencies()
 
 	snapshot.Fastest = r.fastest
 	snapshot.Slowest = r.slowest
@@ -239,7 +239,7 @@ func (r *report) latencies() []*say.LatencyDistribution {
 	return res
 }
 
-func (r *report) histogram() []Bucket {
+func (r *report) histogram() []stat.Bucket {
 	bc := 10
 	buckets := make([]float64, bc+1)
 	counts := make([]int, bc+1)

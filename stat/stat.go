@@ -1,24 +1,24 @@
 package stat
 
 import (
-	"fmt"
 	"sync"
-	"time"
 )
 
 var Reporters sync.Map
 
 type SingleStat struct {
+	Id                 string  `json:"id" bson:"id"`
 	Method             string  `json:"method" bson:"method"`
 	Name               string  `json:"name" bson:"name"`
-	NumRequests        int     `json:"num_requests" bson:"num_requests"`
+	NumRequests        int32   `json:"num_requests" bson:"num_requests"`
 	NumFailures        int32   `json:"num_failures" bson:"num_failures"`
 	MedianResponseTime float64 `json:"median_response_time" bson:"median_response_time"`
 	AvgResponseTime    string  `json:"avg_response_time" bson:"avg_response_time"`
 	MinResponseTime    float64 `json:"min_response_time" bson:"min_response_time"`
 	MaxResponseTime    float64 `json:"max_response_time" bson:"max_response_time"`
 	AvgContentLength   float64 `json:"avg_content_length" bson:"avg_content_length"`
-	CurrentRps         int     `json:"current_rps" bson:"current_rps"`
+	CurrentRps         int32   `json:"current_rps" bson:"current_rps"`
+	Rps                int32   `json:"rps" bson:"rps"`
 }
 
 type StatRes struct {
@@ -50,36 +50,9 @@ func StatReqs() *StatRes {
 
 	res := StatRes{}
 	Reporters.Range(func(key, value interface{}) bool {
-		report := value.(*Report)
-		mrt := 0.0
-		avgcl := 0.0
-		rps := 0
+		sstat := value.(*SingleStat)
 
-		if int(len(report.ResLats)/2) > 0 {
-			mrt = report.ResLats[int(len(report.ResLats)/2)]
-			avgcl = float64(report.SizeTotal) / float64(len(report.ResLats))
-
-			interval := int((Now() - report.Start) / time.Second)
-			if report.Rps > 0 || interval == 0 {
-				rps = 0
-			} else {
-				rps = len(report.ResLats) / interval
-			}
-		}
-
-		AvgRes := fmt.Sprintf("%f", report.AvgRes)
-		res.Stats = append(res.Stats, SingleStat{
-			AvgContentLength:   avgcl,
-			AvgResponseTime:    AvgRes,
-			MaxResponseTime:    report.ResMax,
-			MinResponseTime:    report.ResMin,
-			MedianResponseTime: mrt,
-			CurrentRps:         rps,
-			Method:             report.Method,
-			Name:               report.Name,
-			NumRequests:        len(report.ResLats),
-			NumFailures:        sum(report.ErrorDist),
-		})
+		res.Stats = append(res.Stats, *sstat)
 		return true
 	})
 	return &res

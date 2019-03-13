@@ -38,6 +38,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/zhwei820/gostresser/stat"
 	"strings"
 	"text/template"
 )
@@ -73,7 +74,7 @@ func formatNumberInt(duration int) string {
 	return fmt.Sprintf("%d", duration)
 }
 
-func histogram(buckets []Bucket) string {
+func histogram(buckets []stat.Bucket) string {
 	max := 0
 	for _, b := range buckets {
 		if v := b.Count; v > max {

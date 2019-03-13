@@ -28,52 +28,25 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 type SayInput struct {
-	Id                  string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
-	Method              string                 `protobuf:"bytes,2,opt,name=Method,proto3" json:"Method,omitempty"`
-	Name                string                 `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
-	Start               int64                  `protobuf:"varint,4,opt,name=Start,proto3" json:"Start,omitempty"`
-	AvgTotal            float64                `protobuf:"fixed64,5,opt,name=AvgTotal,proto3" json:"AvgTotal,omitempty"`
-	Fastest             float64                `protobuf:"fixed64,6,opt,name=Fastest,proto3" json:"Fastest,omitempty"`
-	Slowest             float64                `protobuf:"fixed64,7,opt,name=Slowest,proto3" json:"Slowest,omitempty"`
-	Average             float64                `protobuf:"fixed64,8,opt,name=Average,proto3" json:"Average,omitempty"`
-	Rps                 float64                `protobuf:"fixed64,9,opt,name=Rps,proto3" json:"Rps,omitempty"`
-	AvgConn             float64                `protobuf:"fixed64,10,opt,name=AvgConn,proto3" json:"AvgConn,omitempty"`
-	AvgDNS              float64                `protobuf:"fixed64,11,opt,name=AvgDNS,proto3" json:"AvgDNS,omitempty"`
-	AvgReq              float64                `protobuf:"fixed64,12,opt,name=AvgReq,proto3" json:"AvgReq,omitempty"`
-	AvgRes              float64                `protobuf:"fixed64,13,opt,name=AvgRes,proto3" json:"AvgRes,omitempty"`
-	AvgDelay            float64                `protobuf:"fixed64,14,opt,name=AvgDelay,proto3" json:"AvgDelay,omitempty"`
-	ConnMax             float64                `protobuf:"fixed64,15,opt,name=ConnMax,proto3" json:"ConnMax,omitempty"`
-	ConnMin             float64                `protobuf:"fixed64,16,opt,name=ConnMin,proto3" json:"ConnMin,omitempty"`
-	DnsMax              float64                `protobuf:"fixed64,17,opt,name=DnsMax,proto3" json:"DnsMax,omitempty"`
-	DnsMin              float64                `protobuf:"fixed64,18,opt,name=DnsMin,proto3" json:"DnsMin,omitempty"`
-	ReqMax              float64                `protobuf:"fixed64,19,opt,name=ReqMax,proto3" json:"ReqMax,omitempty"`
-	ReqMin              float64                `protobuf:"fixed64,20,opt,name=ReqMin,proto3" json:"ReqMin,omitempty"`
-	ResMax              float64                `protobuf:"fixed64,21,opt,name=ResMax,proto3" json:"ResMax,omitempty"`
-	ResMin              float64                `protobuf:"fixed64,22,opt,name=ResMin,proto3" json:"ResMin,omitempty"`
-	DelayMax            float64                `protobuf:"fixed64,23,opt,name=DelayMax,proto3" json:"DelayMax,omitempty"`
-	DelayMin            float64                `protobuf:"fixed64,24,opt,name=DelayMin,proto3" json:"DelayMin,omitempty"`
-	Lats                []float64              `protobuf:"fixed64,25,rep,packed,name=Lats" json:"Lats,omitempty"`
-	ConnLats            []float64              `protobuf:"fixed64,26,rep,packed,name=ConnLats" json:"ConnLats,omitempty"`
-	DnsLats             []float64              `protobuf:"fixed64,27,rep,packed,name=DnsLats" json:"DnsLats,omitempty"`
-	ReqLats             []float64              `protobuf:"fixed64,28,rep,packed,name=ReqLats" json:"ReqLats,omitempty"`
-	ResLats             []float64              `protobuf:"fixed64,29,rep,packed,name=ResLats" json:"ResLats,omitempty"`
-	DelayLats           []float64              `protobuf:"fixed64,30,rep,packed,name=DelayLats" json:"DelayLats,omitempty"`
-	Offsets             []float64              `protobuf:"fixed64,31,rep,packed,name=Offsets" json:"Offsets,omitempty"`
-	StatusCodes         []int32                `protobuf:"varint,32,rep,packed,name=StatusCodes" json:"StatusCodes,omitempty"`
-	Total               int32                  `protobuf:"varint,33,opt,name=Total,proto3" json:"Total,omitempty"`
-	ErrorDist           map[string]int32       `protobuf:"bytes,34,rep,name=ErrorDist" json:"ErrorDist,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
-	StatusCodeDist      map[int32]int32        `protobuf:"bytes,35,rep,name=StatusCodeDist" json:"StatusCodeDist,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
-	SizeTotal           int64                  `protobuf:"varint,36,opt,name=SizeTotal,proto3" json:"SizeTotal,omitempty"`
-	SizeReq             int64                  `protobuf:"varint,37,opt,name=SizeReq,proto3" json:"SizeReq,omitempty"`
-	NumRes              int64                  `protobuf:"varint,38,opt,name=NumRes,proto3" json:"NumRes,omitempty"`
-	LatencyDistribution []*LatencyDistribution `protobuf:"bytes,39,rep,name=LatencyDistribution" json:"LatencyDistribution,omitempty"`
+	Id                 string  `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	Method             string  `protobuf:"bytes,2,opt,name=Method,proto3" json:"Method,omitempty"`
+	Name               string  `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
+	NumRequests        int32   `protobuf:"varint,4,opt,name=NumRequests,proto3" json:"NumRequests,omitempty"`
+	NumFailures        int32   `protobuf:"varint,5,opt,name=NumFailures,proto3" json:"NumFailures,omitempty"`
+	MedianResponseTime float64 `protobuf:"fixed64,6,opt,name=MedianResponseTime,proto3" json:"MedianResponseTime,omitempty"`
+	AvgResponseTime    string  `protobuf:"bytes,7,opt,name=AvgResponseTime,proto3" json:"AvgResponseTime,omitempty"`
+	MinResponseTime    float64 `protobuf:"fixed64,8,opt,name=MinResponseTime,proto3" json:"MinResponseTime,omitempty"`
+	MaxResponseTime    float64 `protobuf:"fixed64,9,opt,name=MaxResponseTime,proto3" json:"MaxResponseTime,omitempty"`
+	AvgContentLength   float64 `protobuf:"fixed64,10,opt,name=AvgContentLength,proto3" json:"AvgContentLength,omitempty"`
+	CurrentRps         int32   `protobuf:"varint,11,opt,name=CurrentRps,proto3" json:"CurrentRps,omitempty"`
+	Rps                int32   `protobuf:"varint,12,opt,name=Rps,proto3" json:"Rps,omitempty"`
 }
 
 func (m *SayInput) Reset()         { *m = SayInput{} }
 func (m *SayInput) String() string { return proto.CompactTextString(m) }
 func (*SayInput) ProtoMessage()    {}
 func (*SayInput) Descriptor() ([]byte, []int) {
-	return fileDescriptor_say_b3531e4e79bae693, []int{0}
+	return fileDescriptor_say_ae25fb851581a48a, []int{0}
 }
 func (m *SayInput) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -123,256 +96,67 @@ func (m *SayInput) GetName() string {
 	return ""
 }
 
-func (m *SayInput) GetStart() int64 {
+func (m *SayInput) GetNumRequests() int32 {
 	if m != nil {
-		return m.Start
+		return m.NumRequests
 	}
 	return 0
 }
 
-func (m *SayInput) GetAvgTotal() float64 {
+func (m *SayInput) GetNumFailures() int32 {
 	if m != nil {
-		return m.AvgTotal
+		return m.NumFailures
 	}
 	return 0
 }
 
-func (m *SayInput) GetFastest() float64 {
+func (m *SayInput) GetMedianResponseTime() float64 {
 	if m != nil {
-		return m.Fastest
+		return m.MedianResponseTime
 	}
 	return 0
 }
 
-func (m *SayInput) GetSlowest() float64 {
+func (m *SayInput) GetAvgResponseTime() string {
 	if m != nil {
-		return m.Slowest
+		return m.AvgResponseTime
+	}
+	return ""
+}
+
+func (m *SayInput) GetMinResponseTime() float64 {
+	if m != nil {
+		return m.MinResponseTime
 	}
 	return 0
 }
 
-func (m *SayInput) GetAverage() float64 {
+func (m *SayInput) GetMaxResponseTime() float64 {
 	if m != nil {
-		return m.Average
+		return m.MaxResponseTime
 	}
 	return 0
 }
 
-func (m *SayInput) GetRps() float64 {
+func (m *SayInput) GetAvgContentLength() float64 {
+	if m != nil {
+		return m.AvgContentLength
+	}
+	return 0
+}
+
+func (m *SayInput) GetCurrentRps() int32 {
+	if m != nil {
+		return m.CurrentRps
+	}
+	return 0
+}
+
+func (m *SayInput) GetRps() int32 {
 	if m != nil {
 		return m.Rps
 	}
 	return 0
-}
-
-func (m *SayInput) GetAvgConn() float64 {
-	if m != nil {
-		return m.AvgConn
-	}
-	return 0
-}
-
-func (m *SayInput) GetAvgDNS() float64 {
-	if m != nil {
-		return m.AvgDNS
-	}
-	return 0
-}
-
-func (m *SayInput) GetAvgReq() float64 {
-	if m != nil {
-		return m.AvgReq
-	}
-	return 0
-}
-
-func (m *SayInput) GetAvgRes() float64 {
-	if m != nil {
-		return m.AvgRes
-	}
-	return 0
-}
-
-func (m *SayInput) GetAvgDelay() float64 {
-	if m != nil {
-		return m.AvgDelay
-	}
-	return 0
-}
-
-func (m *SayInput) GetConnMax() float64 {
-	if m != nil {
-		return m.ConnMax
-	}
-	return 0
-}
-
-func (m *SayInput) GetConnMin() float64 {
-	if m != nil {
-		return m.ConnMin
-	}
-	return 0
-}
-
-func (m *SayInput) GetDnsMax() float64 {
-	if m != nil {
-		return m.DnsMax
-	}
-	return 0
-}
-
-func (m *SayInput) GetDnsMin() float64 {
-	if m != nil {
-		return m.DnsMin
-	}
-	return 0
-}
-
-func (m *SayInput) GetReqMax() float64 {
-	if m != nil {
-		return m.ReqMax
-	}
-	return 0
-}
-
-func (m *SayInput) GetReqMin() float64 {
-	if m != nil {
-		return m.ReqMin
-	}
-	return 0
-}
-
-func (m *SayInput) GetResMax() float64 {
-	if m != nil {
-		return m.ResMax
-	}
-	return 0
-}
-
-func (m *SayInput) GetResMin() float64 {
-	if m != nil {
-		return m.ResMin
-	}
-	return 0
-}
-
-func (m *SayInput) GetDelayMax() float64 {
-	if m != nil {
-		return m.DelayMax
-	}
-	return 0
-}
-
-func (m *SayInput) GetDelayMin() float64 {
-	if m != nil {
-		return m.DelayMin
-	}
-	return 0
-}
-
-func (m *SayInput) GetLats() []float64 {
-	if m != nil {
-		return m.Lats
-	}
-	return nil
-}
-
-func (m *SayInput) GetConnLats() []float64 {
-	if m != nil {
-		return m.ConnLats
-	}
-	return nil
-}
-
-func (m *SayInput) GetDnsLats() []float64 {
-	if m != nil {
-		return m.DnsLats
-	}
-	return nil
-}
-
-func (m *SayInput) GetReqLats() []float64 {
-	if m != nil {
-		return m.ReqLats
-	}
-	return nil
-}
-
-func (m *SayInput) GetResLats() []float64 {
-	if m != nil {
-		return m.ResLats
-	}
-	return nil
-}
-
-func (m *SayInput) GetDelayLats() []float64 {
-	if m != nil {
-		return m.DelayLats
-	}
-	return nil
-}
-
-func (m *SayInput) GetOffsets() []float64 {
-	if m != nil {
-		return m.Offsets
-	}
-	return nil
-}
-
-func (m *SayInput) GetStatusCodes() []int32 {
-	if m != nil {
-		return m.StatusCodes
-	}
-	return nil
-}
-
-func (m *SayInput) GetTotal() int32 {
-	if m != nil {
-		return m.Total
-	}
-	return 0
-}
-
-func (m *SayInput) GetErrorDist() map[string]int32 {
-	if m != nil {
-		return m.ErrorDist
-	}
-	return nil
-}
-
-func (m *SayInput) GetStatusCodeDist() map[int32]int32 {
-	if m != nil {
-		return m.StatusCodeDist
-	}
-	return nil
-}
-
-func (m *SayInput) GetSizeTotal() int64 {
-	if m != nil {
-		return m.SizeTotal
-	}
-	return 0
-}
-
-func (m *SayInput) GetSizeReq() int64 {
-	if m != nil {
-		return m.SizeReq
-	}
-	return 0
-}
-
-func (m *SayInput) GetNumRes() int64 {
-	if m != nil {
-		return m.NumRes
-	}
-	return 0
-}
-
-func (m *SayInput) GetLatencyDistribution() []*LatencyDistribution {
-	if m != nil {
-		return m.LatencyDistribution
-	}
-	return nil
 }
 
 type LatencyDistribution struct {
@@ -384,7 +168,7 @@ func (m *LatencyDistribution) Reset()         { *m = LatencyDistribution{} }
 func (m *LatencyDistribution) String() string { return proto.CompactTextString(m) }
 func (*LatencyDistribution) ProtoMessage()    {}
 func (*LatencyDistribution) Descriptor() ([]byte, []int) {
-	return fileDescriptor_say_b3531e4e79bae693, []int{1}
+	return fileDescriptor_say_ae25fb851581a48a, []int{1}
 }
 func (m *LatencyDistribution) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -436,7 +220,7 @@ func (m *SayOutput) Reset()         { *m = SayOutput{} }
 func (m *SayOutput) String() string { return proto.CompactTextString(m) }
 func (*SayOutput) ProtoMessage()    {}
 func (*SayOutput) Descriptor() ([]byte, []int) {
-	return fileDescriptor_say_b3531e4e79bae693, []int{2}
+	return fileDescriptor_say_ae25fb851581a48a, []int{2}
 }
 func (m *SayOutput) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -481,8 +265,6 @@ func (m *SayOutput) GetMsg() string {
 
 func init() {
 	proto.RegisterType((*SayInput)(nil), "say.SayInput")
-	proto.RegisterMapType((map[string]int32)(nil), "say.SayInput.ErrorDistEntry")
-	proto.RegisterMapType((map[int32]int32)(nil), "say.SayInput.StatusCodeDistEntry")
 	proto.RegisterType((*LatencyDistribution)(nil), "say.LatencyDistribution")
 	proto.RegisterType((*SayOutput)(nil), "say.SayOutput")
 }
@@ -592,329 +374,55 @@ func (m *SayInput) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintSay(dAtA, i, uint64(len(m.Name)))
 		i += copy(dAtA[i:], m.Name)
 	}
-	if m.Start != 0 {
+	if m.NumRequests != 0 {
 		dAtA[i] = 0x20
 		i++
-		i = encodeVarintSay(dAtA, i, uint64(m.Start))
+		i = encodeVarintSay(dAtA, i, uint64(m.NumRequests))
 	}
-	if m.AvgTotal != 0 {
-		dAtA[i] = 0x29
+	if m.NumFailures != 0 {
+		dAtA[i] = 0x28
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.AvgTotal))))
-		i += 8
+		i = encodeVarintSay(dAtA, i, uint64(m.NumFailures))
 	}
-	if m.Fastest != 0 {
+	if m.MedianResponseTime != 0 {
 		dAtA[i] = 0x31
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Fastest))))
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.MedianResponseTime))))
 		i += 8
 	}
-	if m.Slowest != 0 {
-		dAtA[i] = 0x39
+	if len(m.AvgResponseTime) > 0 {
+		dAtA[i] = 0x3a
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Slowest))))
-		i += 8
+		i = encodeVarintSay(dAtA, i, uint64(len(m.AvgResponseTime)))
+		i += copy(dAtA[i:], m.AvgResponseTime)
 	}
-	if m.Average != 0 {
+	if m.MinResponseTime != 0 {
 		dAtA[i] = 0x41
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Average))))
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.MinResponseTime))))
 		i += 8
 	}
-	if m.Rps != 0 {
+	if m.MaxResponseTime != 0 {
 		dAtA[i] = 0x49
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Rps))))
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.MaxResponseTime))))
 		i += 8
 	}
-	if m.AvgConn != 0 {
+	if m.AvgContentLength != 0 {
 		dAtA[i] = 0x51
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.AvgConn))))
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.AvgContentLength))))
 		i += 8
 	}
-	if m.AvgDNS != 0 {
-		dAtA[i] = 0x59
+	if m.CurrentRps != 0 {
+		dAtA[i] = 0x58
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.AvgDNS))))
-		i += 8
+		i = encodeVarintSay(dAtA, i, uint64(m.CurrentRps))
 	}
-	if m.AvgReq != 0 {
-		dAtA[i] = 0x61
+	if m.Rps != 0 {
+		dAtA[i] = 0x60
 		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.AvgReq))))
-		i += 8
-	}
-	if m.AvgRes != 0 {
-		dAtA[i] = 0x69
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.AvgRes))))
-		i += 8
-	}
-	if m.AvgDelay != 0 {
-		dAtA[i] = 0x71
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.AvgDelay))))
-		i += 8
-	}
-	if m.ConnMax != 0 {
-		dAtA[i] = 0x79
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.ConnMax))))
-		i += 8
-	}
-	if m.ConnMin != 0 {
-		dAtA[i] = 0x81
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.ConnMin))))
-		i += 8
-	}
-	if m.DnsMax != 0 {
-		dAtA[i] = 0x89
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.DnsMax))))
-		i += 8
-	}
-	if m.DnsMin != 0 {
-		dAtA[i] = 0x91
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.DnsMin))))
-		i += 8
-	}
-	if m.ReqMax != 0 {
-		dAtA[i] = 0x99
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.ReqMax))))
-		i += 8
-	}
-	if m.ReqMin != 0 {
-		dAtA[i] = 0xa1
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.ReqMin))))
-		i += 8
-	}
-	if m.ResMax != 0 {
-		dAtA[i] = 0xa9
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.ResMax))))
-		i += 8
-	}
-	if m.ResMin != 0 {
-		dAtA[i] = 0xb1
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.ResMin))))
-		i += 8
-	}
-	if m.DelayMax != 0 {
-		dAtA[i] = 0xb9
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.DelayMax))))
-		i += 8
-	}
-	if m.DelayMin != 0 {
-		dAtA[i] = 0xc1
-		i++
-		dAtA[i] = 0x1
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.DelayMin))))
-		i += 8
-	}
-	if len(m.Lats) > 0 {
-		dAtA[i] = 0xca
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(len(m.Lats)*8))
-		for _, num := range m.Lats {
-			f1 := math.Float64bits(float64(num))
-			encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(f1))
-			i += 8
-		}
-	}
-	if len(m.ConnLats) > 0 {
-		dAtA[i] = 0xd2
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(len(m.ConnLats)*8))
-		for _, num := range m.ConnLats {
-			f2 := math.Float64bits(float64(num))
-			encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(f2))
-			i += 8
-		}
-	}
-	if len(m.DnsLats) > 0 {
-		dAtA[i] = 0xda
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(len(m.DnsLats)*8))
-		for _, num := range m.DnsLats {
-			f3 := math.Float64bits(float64(num))
-			encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(f3))
-			i += 8
-		}
-	}
-	if len(m.ReqLats) > 0 {
-		dAtA[i] = 0xe2
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(len(m.ReqLats)*8))
-		for _, num := range m.ReqLats {
-			f4 := math.Float64bits(float64(num))
-			encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(f4))
-			i += 8
-		}
-	}
-	if len(m.ResLats) > 0 {
-		dAtA[i] = 0xea
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(len(m.ResLats)*8))
-		for _, num := range m.ResLats {
-			f5 := math.Float64bits(float64(num))
-			encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(f5))
-			i += 8
-		}
-	}
-	if len(m.DelayLats) > 0 {
-		dAtA[i] = 0xf2
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(len(m.DelayLats)*8))
-		for _, num := range m.DelayLats {
-			f6 := math.Float64bits(float64(num))
-			encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(f6))
-			i += 8
-		}
-	}
-	if len(m.Offsets) > 0 {
-		dAtA[i] = 0xfa
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(len(m.Offsets)*8))
-		for _, num := range m.Offsets {
-			f7 := math.Float64bits(float64(num))
-			encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(f7))
-			i += 8
-		}
-	}
-	if len(m.StatusCodes) > 0 {
-		dAtA9 := make([]byte, len(m.StatusCodes)*10)
-		var j8 int
-		for _, num1 := range m.StatusCodes {
-			num := uint64(num1)
-			for num >= 1<<7 {
-				dAtA9[j8] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j8++
-			}
-			dAtA9[j8] = uint8(num)
-			j8++
-		}
-		dAtA[i] = 0x82
-		i++
-		dAtA[i] = 0x2
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(j8))
-		i += copy(dAtA[i:], dAtA9[:j8])
-	}
-	if m.Total != 0 {
-		dAtA[i] = 0x88
-		i++
-		dAtA[i] = 0x2
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(m.Total))
-	}
-	if len(m.ErrorDist) > 0 {
-		for k, _ := range m.ErrorDist {
-			dAtA[i] = 0x92
-			i++
-			dAtA[i] = 0x2
-			i++
-			v := m.ErrorDist[k]
-			mapSize := 1 + len(k) + sovSay(uint64(len(k))) + 1 + sovSay(uint64(v))
-			i = encodeVarintSay(dAtA, i, uint64(mapSize))
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintSay(dAtA, i, uint64(len(k)))
-			i += copy(dAtA[i:], k)
-			dAtA[i] = 0x10
-			i++
-			i = encodeVarintSay(dAtA, i, uint64(v))
-		}
-	}
-	if len(m.StatusCodeDist) > 0 {
-		for k, _ := range m.StatusCodeDist {
-			dAtA[i] = 0x9a
-			i++
-			dAtA[i] = 0x2
-			i++
-			v := m.StatusCodeDist[k]
-			mapSize := 1 + sovSay(uint64(k)) + 1 + sovSay(uint64(v))
-			i = encodeVarintSay(dAtA, i, uint64(mapSize))
-			dAtA[i] = 0x8
-			i++
-			i = encodeVarintSay(dAtA, i, uint64(k))
-			dAtA[i] = 0x10
-			i++
-			i = encodeVarintSay(dAtA, i, uint64(v))
-		}
-	}
-	if m.SizeTotal != 0 {
-		dAtA[i] = 0xa0
-		i++
-		dAtA[i] = 0x2
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(m.SizeTotal))
-	}
-	if m.SizeReq != 0 {
-		dAtA[i] = 0xa8
-		i++
-		dAtA[i] = 0x2
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(m.SizeReq))
-	}
-	if m.NumRes != 0 {
-		dAtA[i] = 0xb0
-		i++
-		dAtA[i] = 0x2
-		i++
-		i = encodeVarintSay(dAtA, i, uint64(m.NumRes))
-	}
-	if len(m.LatencyDistribution) > 0 {
-		for _, msg := range m.LatencyDistribution {
-			dAtA[i] = 0xba
-			i++
-			dAtA[i] = 0x2
-			i++
-			i = encodeVarintSay(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
-		}
+		i = encodeVarintSay(dAtA, i, uint64(m.Rps))
 	}
 	return i, nil
 }
@@ -1005,130 +513,33 @@ func (m *SayInput) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovSay(uint64(l))
 	}
-	if m.Start != 0 {
-		n += 1 + sovSay(uint64(m.Start))
+	if m.NumRequests != 0 {
+		n += 1 + sovSay(uint64(m.NumRequests))
 	}
-	if m.AvgTotal != 0 {
+	if m.NumFailures != 0 {
+		n += 1 + sovSay(uint64(m.NumFailures))
+	}
+	if m.MedianResponseTime != 0 {
 		n += 9
 	}
-	if m.Fastest != 0 {
+	l = len(m.AvgResponseTime)
+	if l > 0 {
+		n += 1 + l + sovSay(uint64(l))
+	}
+	if m.MinResponseTime != 0 {
 		n += 9
 	}
-	if m.Slowest != 0 {
+	if m.MaxResponseTime != 0 {
 		n += 9
 	}
-	if m.Average != 0 {
+	if m.AvgContentLength != 0 {
 		n += 9
+	}
+	if m.CurrentRps != 0 {
+		n += 1 + sovSay(uint64(m.CurrentRps))
 	}
 	if m.Rps != 0 {
-		n += 9
-	}
-	if m.AvgConn != 0 {
-		n += 9
-	}
-	if m.AvgDNS != 0 {
-		n += 9
-	}
-	if m.AvgReq != 0 {
-		n += 9
-	}
-	if m.AvgRes != 0 {
-		n += 9
-	}
-	if m.AvgDelay != 0 {
-		n += 9
-	}
-	if m.ConnMax != 0 {
-		n += 9
-	}
-	if m.ConnMin != 0 {
-		n += 10
-	}
-	if m.DnsMax != 0 {
-		n += 10
-	}
-	if m.DnsMin != 0 {
-		n += 10
-	}
-	if m.ReqMax != 0 {
-		n += 10
-	}
-	if m.ReqMin != 0 {
-		n += 10
-	}
-	if m.ResMax != 0 {
-		n += 10
-	}
-	if m.ResMin != 0 {
-		n += 10
-	}
-	if m.DelayMax != 0 {
-		n += 10
-	}
-	if m.DelayMin != 0 {
-		n += 10
-	}
-	if len(m.Lats) > 0 {
-		n += 2 + sovSay(uint64(len(m.Lats)*8)) + len(m.Lats)*8
-	}
-	if len(m.ConnLats) > 0 {
-		n += 2 + sovSay(uint64(len(m.ConnLats)*8)) + len(m.ConnLats)*8
-	}
-	if len(m.DnsLats) > 0 {
-		n += 2 + sovSay(uint64(len(m.DnsLats)*8)) + len(m.DnsLats)*8
-	}
-	if len(m.ReqLats) > 0 {
-		n += 2 + sovSay(uint64(len(m.ReqLats)*8)) + len(m.ReqLats)*8
-	}
-	if len(m.ResLats) > 0 {
-		n += 2 + sovSay(uint64(len(m.ResLats)*8)) + len(m.ResLats)*8
-	}
-	if len(m.DelayLats) > 0 {
-		n += 2 + sovSay(uint64(len(m.DelayLats)*8)) + len(m.DelayLats)*8
-	}
-	if len(m.Offsets) > 0 {
-		n += 2 + sovSay(uint64(len(m.Offsets)*8)) + len(m.Offsets)*8
-	}
-	if len(m.StatusCodes) > 0 {
-		l = 0
-		for _, e := range m.StatusCodes {
-			l += sovSay(uint64(e))
-		}
-		n += 2 + sovSay(uint64(l)) + l
-	}
-	if m.Total != 0 {
-		n += 2 + sovSay(uint64(m.Total))
-	}
-	if len(m.ErrorDist) > 0 {
-		for k, v := range m.ErrorDist {
-			_ = k
-			_ = v
-			mapEntrySize := 1 + len(k) + sovSay(uint64(len(k))) + 1 + sovSay(uint64(v))
-			n += mapEntrySize + 2 + sovSay(uint64(mapEntrySize))
-		}
-	}
-	if len(m.StatusCodeDist) > 0 {
-		for k, v := range m.StatusCodeDist {
-			_ = k
-			_ = v
-			mapEntrySize := 1 + sovSay(uint64(k)) + 1 + sovSay(uint64(v))
-			n += mapEntrySize + 2 + sovSay(uint64(mapEntrySize))
-		}
-	}
-	if m.SizeTotal != 0 {
-		n += 2 + sovSay(uint64(m.SizeTotal))
-	}
-	if m.SizeReq != 0 {
-		n += 2 + sovSay(uint64(m.SizeReq))
-	}
-	if m.NumRes != 0 {
-		n += 2 + sovSay(uint64(m.NumRes))
-	}
-	if len(m.LatencyDistribution) > 0 {
-		for _, e := range m.LatencyDistribution {
-			l = e.Size()
-			n += 2 + l + sovSay(uint64(l))
-		}
+		n += 1 + sovSay(uint64(m.Rps))
 	}
 	return n
 }
@@ -1296,9 +707,9 @@ func (m *SayInput) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Start", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field NumRequests", wireType)
 			}
-			m.Start = 0
+			m.NumRequests = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowSay
@@ -1308,25 +719,33 @@ func (m *SayInput) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Start |= (int64(b) & 0x7F) << shift
+				m.NumRequests |= (int32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
 		case 5:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvgTotal", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NumFailures", wireType)
 			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			m.NumFailures = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSay
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NumFailures |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
 			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.AvgTotal = float64(math.Float64frombits(v))
 		case 6:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Fastest", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field MedianResponseTime", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -1334,21 +753,39 @@ func (m *SayInput) Unmarshal(dAtA []byte) error {
 			}
 			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 			iNdEx += 8
-			m.Fastest = float64(math.Float64frombits(v))
+			m.MedianResponseTime = float64(math.Float64frombits(v))
 		case 7:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Slowest", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvgResponseTime", wireType)
 			}
-			var v uint64
-			if (iNdEx + 8) > l {
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSay
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSay
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.Slowest = float64(math.Float64frombits(v))
+			m.AvgResponseTime = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 8:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Average", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field MinResponseTime", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -1356,10 +793,10 @@ func (m *SayInput) Unmarshal(dAtA []byte) error {
 			}
 			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 			iNdEx += 8
-			m.Average = float64(math.Float64frombits(v))
+			m.MinResponseTime = float64(math.Float64frombits(v))
 		case 9:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Rps", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxResponseTime", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -1367,10 +804,10 @@ func (m *SayInput) Unmarshal(dAtA []byte) error {
 			}
 			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 			iNdEx += 8
-			m.Rps = float64(math.Float64frombits(v))
+			m.MaxResponseTime = float64(math.Float64frombits(v))
 		case 10:
 			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvgConn", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field AvgContentLength", wireType)
 			}
 			var v uint64
 			if (iNdEx + 8) > l {
@@ -1378,596 +815,31 @@ func (m *SayInput) Unmarshal(dAtA []byte) error {
 			}
 			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
 			iNdEx += 8
-			m.AvgConn = float64(math.Float64frombits(v))
+			m.AvgContentLength = float64(math.Float64frombits(v))
 		case 11:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvgDNS", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CurrentRps", wireType)
 			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
+			m.CurrentRps = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSay
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CurrentRps |= (int32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
 			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.AvgDNS = float64(math.Float64frombits(v))
 		case 12:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvgReq", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.AvgReq = float64(math.Float64frombits(v))
-		case 13:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvgRes", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.AvgRes = float64(math.Float64frombits(v))
-		case 14:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvgDelay", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.AvgDelay = float64(math.Float64frombits(v))
-		case 15:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ConnMax", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.ConnMax = float64(math.Float64frombits(v))
-		case 16:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ConnMin", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.ConnMin = float64(math.Float64frombits(v))
-		case 17:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DnsMax", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.DnsMax = float64(math.Float64frombits(v))
-		case 18:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DnsMin", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.DnsMin = float64(math.Float64frombits(v))
-		case 19:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ReqMax", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.ReqMax = float64(math.Float64frombits(v))
-		case 20:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ReqMin", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.ReqMin = float64(math.Float64frombits(v))
-		case 21:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResMax", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.ResMax = float64(math.Float64frombits(v))
-		case 22:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResMin", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.ResMin = float64(math.Float64frombits(v))
-		case 23:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DelayMax", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.DelayMax = float64(math.Float64frombits(v))
-		case 24:
-			if wireType != 1 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DelayMin", wireType)
-			}
-			var v uint64
-			if (iNdEx + 8) > l {
-				return io.ErrUnexpectedEOF
-			}
-			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-			iNdEx += 8
-			m.DelayMin = float64(math.Float64frombits(v))
-		case 25:
-			if wireType == 1 {
-				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
-				}
-				v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				v2 := float64(math.Float64frombits(v))
-				m.Lats = append(m.Lats, v2)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.Lats) == 0 {
-					m.Lats = make([]float64, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
-					}
-					v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
-					v2 := float64(math.Float64frombits(v))
-					m.Lats = append(m.Lats, v2)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field Lats", wireType)
-			}
-		case 26:
-			if wireType == 1 {
-				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
-				}
-				v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				v2 := float64(math.Float64frombits(v))
-				m.ConnLats = append(m.ConnLats, v2)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.ConnLats) == 0 {
-					m.ConnLats = make([]float64, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
-					}
-					v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
-					v2 := float64(math.Float64frombits(v))
-					m.ConnLats = append(m.ConnLats, v2)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field ConnLats", wireType)
-			}
-		case 27:
-			if wireType == 1 {
-				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
-				}
-				v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				v2 := float64(math.Float64frombits(v))
-				m.DnsLats = append(m.DnsLats, v2)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.DnsLats) == 0 {
-					m.DnsLats = make([]float64, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
-					}
-					v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
-					v2 := float64(math.Float64frombits(v))
-					m.DnsLats = append(m.DnsLats, v2)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field DnsLats", wireType)
-			}
-		case 28:
-			if wireType == 1 {
-				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
-				}
-				v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				v2 := float64(math.Float64frombits(v))
-				m.ReqLats = append(m.ReqLats, v2)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.ReqLats) == 0 {
-					m.ReqLats = make([]float64, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
-					}
-					v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
-					v2 := float64(math.Float64frombits(v))
-					m.ReqLats = append(m.ReqLats, v2)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field ReqLats", wireType)
-			}
-		case 29:
-			if wireType == 1 {
-				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
-				}
-				v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				v2 := float64(math.Float64frombits(v))
-				m.ResLats = append(m.ResLats, v2)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.ResLats) == 0 {
-					m.ResLats = make([]float64, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
-					}
-					v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
-					v2 := float64(math.Float64frombits(v))
-					m.ResLats = append(m.ResLats, v2)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResLats", wireType)
-			}
-		case 30:
-			if wireType == 1 {
-				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
-				}
-				v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				v2 := float64(math.Float64frombits(v))
-				m.DelayLats = append(m.DelayLats, v2)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.DelayLats) == 0 {
-					m.DelayLats = make([]float64, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
-					}
-					v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
-					v2 := float64(math.Float64frombits(v))
-					m.DelayLats = append(m.DelayLats, v2)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field DelayLats", wireType)
-			}
-		case 31:
-			if wireType == 1 {
-				var v uint64
-				if (iNdEx + 8) > l {
-					return io.ErrUnexpectedEOF
-				}
-				v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				v2 := float64(math.Float64frombits(v))
-				m.Offsets = append(m.Offsets, v2)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				elementCount = packedLen / 8
-				if elementCount != 0 && len(m.Offsets) == 0 {
-					m.Offsets = make([]float64, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					if (iNdEx + 8) > l {
-						return io.ErrUnexpectedEOF
-					}
-					v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-					iNdEx += 8
-					v2 := float64(math.Float64frombits(v))
-					m.Offsets = append(m.Offsets, v2)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field Offsets", wireType)
-			}
-		case 32:
-			if wireType == 0 {
-				var v int32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (int32(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.StatusCodes = append(m.StatusCodes, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthSay
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				var count int
-				for _, integer := range dAtA {
-					if integer < 128 {
-						count++
-					}
-				}
-				elementCount = count
-				if elementCount != 0 && len(m.StatusCodes) == 0 {
-					m.StatusCodes = make([]int32, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v int32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowSay
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (int32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.StatusCodes = append(m.StatusCodes, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field StatusCodes", wireType)
-			}
-		case 33:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Total", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Rps", wireType)
 			}
-			m.Total = 0
+			m.Rps = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowSay
@@ -1977,302 +849,11 @@ func (m *SayInput) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Total |= (int32(b) & 0x7F) << shift
+				m.Rps |= (int32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 34:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrorDist", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSay
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthSay
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.ErrorDist == nil {
-				m.ErrorDist = make(map[string]int32)
-			}
-			var mapkey string
-			var mapvalue int32
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowSay
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapkey |= (uint64(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return ErrInvalidLengthSay
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
-					iNdEx = postStringIndexmapkey
-				} else if fieldNum == 2 {
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowSay
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapvalue |= (int32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipSay(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if skippy < 0 {
-						return ErrInvalidLengthSay
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.ErrorDist[mapkey] = mapvalue
-			iNdEx = postIndex
-		case 35:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field StatusCodeDist", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSay
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthSay
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.StatusCodeDist == nil {
-				m.StatusCodeDist = make(map[int32]int32)
-			}
-			var mapkey int32
-			var mapvalue int32
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowSay
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowSay
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapkey |= (int32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-				} else if fieldNum == 2 {
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowSay
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapvalue |= (int32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipSay(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if skippy < 0 {
-						return ErrInvalidLengthSay
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.StatusCodeDist[mapkey] = mapvalue
-			iNdEx = postIndex
-		case 36:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SizeTotal", wireType)
-			}
-			m.SizeTotal = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSay
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SizeTotal |= (int64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 37:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SizeReq", wireType)
-			}
-			m.SizeReq = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSay
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SizeReq |= (int64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 38:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NumRes", wireType)
-			}
-			m.NumRes = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSay
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.NumRes |= (int64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 39:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LatencyDistribution", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSay
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthSay
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.LatencyDistribution = append(m.LatencyDistribution, &LatencyDistribution{})
-			if err := m.LatencyDistribution[len(m.LatencyDistribution)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipSay(dAtA[iNdEx:])
@@ -2587,53 +1168,33 @@ var (
 	ErrIntOverflowSay   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("say.proto", fileDescriptor_say_b3531e4e79bae693) }
+func init() { proto.RegisterFile("say.proto", fileDescriptor_say_ae25fb851581a48a) }
 
-var fileDescriptor_say_b3531e4e79bae693 = []byte{
-	// 706 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xdd, 0x4e, 0x1b, 0x3b,
-	0x10, 0xce, 0x26, 0x04, 0x88, 0x39, 0xe4, 0x70, 0x0c, 0x87, 0xe3, 0x93, 0xd2, 0xed, 0x92, 0xfe,
-	0xad, 0x54, 0x09, 0xa9, 0xf4, 0xa6, 0x45, 0xbd, 0x49, 0x09, 0x15, 0xa9, 0xf8, 0xa9, 0xbc, 0x7d,
-	0x01, 0x43, 0x4c, 0xba, 0x6a, 0xf0, 0x92, 0xb5, 0x93, 0x76, 0x79, 0x8a, 0x3e, 0x56, 0x2f, 0xb9,
-	0xec, 0x65, 0x05, 0x7d, 0x90, 0x6a, 0xc6, 0xde, 0xdd, 0xa4, 0x8a, 0xd4, 0x3b, 0x7f, 0xdf, 0x37,
-	0xf3, 0x79, 0xc6, 0x3f, 0x43, 0x1a, 0x5a, 0x64, 0x3b, 0x57, 0x69, 0x62, 0x12, 0x5a, 0xd3, 0x22,
-	0x6b, 0xff, 0x6c, 0x90, 0xe5, 0x48, 0x64, 0x3d, 0x75, 0x35, 0x36, 0xb4, 0x49, 0xaa, 0xbd, 0x3e,
-	0xf3, 0x02, 0x2f, 0x6c, 0xf0, 0x6a, 0xaf, 0x4f, 0x37, 0xc9, 0xe2, 0xb1, 0x34, 0x1f, 0x93, 0x3e,
-	0xab, 0x22, 0xe7, 0x10, 0xa5, 0x64, 0xe1, 0x44, 0x5c, 0x4a, 0x56, 0x43, 0x16, 0xd7, 0x74, 0x83,
-	0xd4, 0x23, 0x23, 0x52, 0xc3, 0x16, 0x02, 0x2f, 0xac, 0x71, 0x0b, 0x68, 0x8b, 0x2c, 0x77, 0x26,
-	0x83, 0x0f, 0x89, 0x11, 0x43, 0x56, 0x0f, 0xbc, 0xd0, 0xe3, 0x05, 0xa6, 0x8c, 0x2c, 0xbd, 0x15,
-	0xda, 0x48, 0x6d, 0xd8, 0x22, 0x4a, 0x39, 0x04, 0x25, 0x1a, 0x26, 0x9f, 0x41, 0x59, 0xb2, 0x8a,
-	0x83, 0xa0, 0x74, 0x26, 0x32, 0x15, 0x03, 0xc9, 0x96, 0xad, 0xe2, 0x20, 0x5d, 0x23, 0x35, 0x7e,
-	0xa5, 0x59, 0x03, 0x59, 0x58, 0xda, 0xd8, 0xc1, 0x7e, 0xa2, 0x14, 0x23, 0x79, 0x2c, 0x42, 0xe8,
-	0xab, 0x33, 0x19, 0x74, 0x4f, 0x22, 0xb6, 0x82, 0x82, 0x43, 0x8e, 0xe7, 0x72, 0xc4, 0xfe, 0x2a,
-	0x78, 0x2e, 0x47, 0x05, 0xaf, 0xd9, 0xea, 0x14, 0xaf, 0x5d, 0x77, 0x5d, 0x39, 0x14, 0x19, 0x6b,
-	0x16, 0xdd, 0x21, 0x86, 0xdd, 0x61, 0xaf, 0x63, 0xf1, 0x85, 0xfd, 0x6d, 0x77, 0x77, 0xb0, 0x50,
-	0x62, 0xc5, 0xd6, 0xa6, 0x94, 0x18, 0xeb, 0xea, 0x2a, 0x0d, 0x29, 0xff, 0xd8, 0x7d, 0x2c, 0xca,
-	0xf9, 0x58, 0x31, 0x5a, 0xf2, 0x36, 0x9e, 0xcb, 0x11, 0xc4, 0xaf, 0x5b, 0xde, 0xa2, 0x9c, 0x8f,
-	0x15, 0xdb, 0x28, 0xf9, 0x3c, 0x1e, 0xfd, 0xff, 0xcd, 0x79, 0x5d, 0xc4, 0xa3, 0xff, 0x66, 0xc9,
-	0xc7, 0x0a, 0xfa, 0xc3, 0x66, 0x20, 0xe3, 0x3f, 0xdb, 0x5f, 0x8e, 0x4b, 0x2d, 0x56, 0x8c, 0x4d,
-	0x6b, 0xb1, 0x82, 0xf7, 0x71, 0x24, 0x8c, 0x66, 0xff, 0x07, 0xb5, 0xd0, 0xe3, 0xb8, 0x86, 0x78,
-	0x68, 0x13, 0xf9, 0x16, 0xf2, 0x05, 0x86, 0x13, 0xe9, 0x2a, 0x8d, 0xd2, 0x3d, 0x94, 0x72, 0x08,
-	0x0a, 0x97, 0x23, 0x54, 0xb6, 0xac, 0xe2, 0xa0, 0x55, 0x6c, 0xce, 0xfd, 0x5c, 0xb1, 0x39, 0x5b,
-	0xa4, 0x81, 0x95, 0xa0, 0xe6, 0xa3, 0x56, 0x12, 0x90, 0x77, 0x7a, 0x71, 0xa1, 0xa5, 0xd1, 0xec,
-	0x81, 0xcd, 0x73, 0x90, 0x06, 0x64, 0x25, 0x32, 0xc2, 0x8c, 0xf5, 0x7e, 0xd2, 0x97, 0x9a, 0x05,
-	0x41, 0x2d, 0xac, 0xf3, 0x69, 0x0a, 0xde, 0xb8, 0x7d, 0xca, 0xdb, 0x81, 0x17, 0xd6, 0xb9, 0x05,
-	0x74, 0x8f, 0x34, 0x0e, 0xd2, 0x34, 0x49, 0xbb, 0xb1, 0x36, 0xac, 0x1d, 0xd4, 0xc2, 0x95, 0xdd,
-	0xad, 0x1d, 0xf8, 0x66, 0xf9, 0xbf, 0xda, 0x29, 0xe4, 0x03, 0x65, 0xd2, 0x8c, 0x97, 0xe1, 0xb4,
-	0x47, 0x9a, 0xe5, 0x06, 0x68, 0xf0, 0x10, 0x0d, 0xb6, 0x67, 0x0d, 0x66, 0x63, 0xac, 0xcb, 0x6f,
-	0x89, 0xd0, 0x76, 0x14, 0x5f, 0x4b, 0x5b, 0xe0, 0x23, 0xfc, 0x84, 0x25, 0x81, 0x5f, 0x2a, 0xbe,
-	0x96, 0xf0, 0xb6, 0x1f, 0xa3, 0x96, 0x43, 0xb8, 0xfc, 0x93, 0xf1, 0x25, 0x3c, 0xee, 0x27, 0x28,
-	0x38, 0x44, 0xdf, 0x91, 0xf5, 0x23, 0x61, 0xa4, 0x3a, 0xcf, 0xc0, 0x3e, 0x8d, 0xcf, 0xc6, 0x26,
-	0x4e, 0x14, 0x7b, 0x8a, 0xf5, 0x31, 0xac, 0x6f, 0x8e, 0xce, 0xe7, 0x25, 0xb5, 0x5e, 0x93, 0xe6,
-	0xec, 0x19, 0xc0, 0x77, 0xfd, 0x24, 0x33, 0x37, 0x6b, 0x60, 0x09, 0x87, 0x3b, 0x11, 0xc3, 0xb1,
-	0xc4, 0x59, 0x53, 0xe7, 0x16, 0xec, 0x55, 0x5f, 0x7a, 0xad, 0x0e, 0x59, 0x9f, 0x73, 0x00, 0xd3,
-	0x16, 0xf5, 0x3f, 0x58, 0xb4, 0x4f, 0xe7, 0x36, 0x43, 0x7d, 0x42, 0xde, 0xcb, 0xf4, 0x5c, 0x2a,
-	0x03, 0x13, 0xc5, 0x3a, 0x4d, 0x31, 0x70, 0x6a, 0x2e, 0x0d, 0x2d, 0x3d, 0x9e, 0xc3, 0xf6, 0x73,
-	0xd2, 0x88, 0x44, 0x76, 0x3a, 0x36, 0x30, 0x37, 0x29, 0x59, 0x80, 0xd2, 0x5c, 0x37, 0xb8, 0x86,
-	0xea, 0x8e, 0xf5, 0xc0, 0x0d, 0x4e, 0x58, 0xee, 0xbe, 0x22, 0x24, 0x12, 0x59, 0x24, 0xd3, 0x49,
-	0x7c, 0x2e, 0xe9, 0x33, 0x9c, 0xbb, 0x87, 0x72, 0x38, 0x4c, 0xe8, 0xea, 0xcc, 0x6d, 0xb7, 0x9a,
-	0x39, 0xb4, 0xf6, 0xed, 0xca, 0x9b, 0xd6, 0xb7, 0x5b, 0xdf, 0xbb, 0xb9, 0xf5, 0xbd, 0x1f, 0xb7,
-	0xbe, 0xf7, 0xf5, 0xce, 0xaf, 0xdc, 0xdc, 0xf9, 0x95, 0xef, 0x77, 0x7e, 0xe5, 0xd0, 0x3b, 0x5b,
-	0xc4, 0x69, 0xfe, 0xe2, 0x57, 0x00, 0x00, 0x00, 0xff, 0xff, 0x59, 0xb6, 0x37, 0x7f, 0xda, 0x05,
-	0x00, 0x00,
+var fileDescriptor_say_ae25fb851581a48a = []byte{
+	// 397 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x92, 0xcf, 0x6e, 0xd3, 0x40,
+	0x10, 0x87, 0xb3, 0xf9, 0xd7, 0x66, 0x0a, 0xa5, 0x1a, 0x24, 0xb4, 0xea, 0xc1, 0x8a, 0x72, 0xb2,
+	0x40, 0x8a, 0x04, 0x9c, 0x38, 0x96, 0x20, 0xd4, 0x48, 0x75, 0x8b, 0xd6, 0xbc, 0xc0, 0x36, 0x1e,
+	0xb9, 0x2b, 0x25, 0xbb, 0xc6, 0xbb, 0x8e, 0xf0, 0x5b, 0x70, 0xe2, 0x99, 0x38, 0xf6, 0xc8, 0x11,
+	0x25, 0x2f, 0x82, 0x76, 0xb1, 0x51, 0x1c, 0xb8, 0xcd, 0x7c, 0xf3, 0x79, 0xb4, 0xd6, 0x6f, 0x60,
+	0x62, 0x65, 0x3d, 0x2f, 0x4a, 0xe3, 0x0c, 0x0e, 0xac, 0xac, 0x67, 0xdf, 0x07, 0x70, 0x9a, 0xca,
+	0x7a, 0xa9, 0x8b, 0xca, 0xe1, 0x39, 0xf4, 0x97, 0x19, 0x67, 0x53, 0x16, 0x4f, 0x44, 0x7f, 0x99,
+	0xe1, 0x0b, 0x18, 0x27, 0xe4, 0x1e, 0x4c, 0xc6, 0xfb, 0x81, 0x35, 0x1d, 0x22, 0x0c, 0x6f, 0xe5,
+	0x86, 0xf8, 0x20, 0xd0, 0x50, 0xe3, 0x14, 0xce, 0x6e, 0xab, 0x8d, 0xa0, 0x2f, 0x15, 0x59, 0x67,
+	0xf9, 0x70, 0xca, 0xe2, 0x91, 0x38, 0x44, 0x8d, 0xf1, 0x51, 0xaa, 0x75, 0x55, 0x92, 0xe5, 0xa3,
+	0xbf, 0x46, 0x8b, 0x70, 0x0e, 0x98, 0x50, 0xa6, 0xa4, 0x16, 0x64, 0x0b, 0xa3, 0x2d, 0x7d, 0x56,
+	0x1b, 0xe2, 0xe3, 0x29, 0x8b, 0x99, 0xf8, 0xcf, 0x04, 0x63, 0x78, 0x76, 0xb5, 0xcd, 0x3b, 0xf2,
+	0x49, 0x78, 0xd2, 0x31, 0xf6, 0x66, 0xa2, 0xba, 0x6b, 0x4f, 0xc3, 0xda, 0x63, 0x1c, 0x4c, 0xf9,
+	0xb5, 0x63, 0x4e, 0x1a, 0xb3, 0x8b, 0xf1, 0x25, 0x5c, 0x5c, 0x6d, 0xf3, 0x85, 0xd1, 0x8e, 0xb4,
+	0xbb, 0x21, 0x9d, 0xbb, 0x07, 0x0e, 0x41, 0xfd, 0x87, 0x63, 0x04, 0xb0, 0xa8, 0xca, 0x92, 0xb4,
+	0x13, 0x85, 0xe5, 0x67, 0xe1, 0xd7, 0x0f, 0x08, 0x5e, 0xc0, 0xc0, 0x0f, 0x9e, 0x84, 0x81, 0x2f,
+	0x67, 0x77, 0xf0, 0xfc, 0x46, 0x3a, 0xd2, 0xab, 0xfa, 0x83, 0xb2, 0xae, 0x54, 0xf7, 0x95, 0x53,
+	0x46, 0xfb, 0x45, 0x9f, 0xa8, 0x5c, 0x91, 0x76, 0x32, 0xa7, 0x10, 0xd5, 0x48, 0x1c, 0x10, 0xe4,
+	0x70, 0xd2, 0x7c, 0x16, 0x32, 0x63, 0xa2, 0x6d, 0x67, 0xaf, 0x61, 0x92, 0xca, 0xfa, 0xae, 0x72,
+	0x3e, 0x69, 0x84, 0xe1, 0xc2, 0x64, 0xd4, 0x64, 0x1d, 0x6a, 0xff, 0x86, 0xc4, 0xe6, 0x4d, 0xd4,
+	0xbe, 0x7c, 0xf3, 0x0e, 0x20, 0x95, 0x75, 0x4a, 0xe5, 0x56, 0xad, 0x08, 0x5f, 0x85, 0x4b, 0xb9,
+	0xa6, 0xf5, 0xda, 0xe0, 0xd3, 0xb9, 0xbf, 0xa3, 0xf6, 0x70, 0x2e, 0xcf, 0xdb, 0xf6, 0xcf, 0xfa,
+	0x59, 0xef, 0xfd, 0xe5, 0x8f, 0x5d, 0xc4, 0x1e, 0x77, 0x11, 0xfb, 0xb5, 0x8b, 0xd8, 0xb7, 0x7d,
+	0xd4, 0x7b, 0xdc, 0x47, 0xbd, 0x9f, 0xfb, 0xa8, 0x77, 0xcd, 0xee, 0xc7, 0xe1, 0xfe, 0xde, 0xfe,
+	0x0e, 0x00, 0x00, 0xff, 0xff, 0x12, 0x76, 0x5b, 0xbe, 0x8c, 0x02, 0x00, 0x00,
 }
